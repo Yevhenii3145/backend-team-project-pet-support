@@ -4,7 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 
 const authRouter = require('./routes/api/authRouter')
-
+const userRouter = require('./routes/api/userRouter')
 const noticesRouter = require('./routes/api/noticesRouter')
 
 const app = express()
@@ -16,7 +16,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('public'))
 
-app.use('/users', authRouter)
+app.use('/user', userRouter)
+app.use('/auth', authRouter)
 app.use('/notices', noticesRouter)
 
 app.use((req, res) => {
