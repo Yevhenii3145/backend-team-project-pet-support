@@ -15,10 +15,8 @@ const addNoticeByCategory = async (req, res) => {
     const FileName = `${originalname}`
     const resultUpload = path.join(avatarsDir, FileName)
 
-    await resize(tempUpload, tempUpload)
+    await resize(tempUpload, resultUpload)
 
-    await fs.rename(tempUpload, resultUpload)
-    // await fs.unlink(tempUpload);
     const avatarURL = path.join('avatars', FileName)
     console.log(avatarURL)
     const result = await Notice.create({
