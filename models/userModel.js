@@ -1,0 +1,73 @@
+const { Schema, model } = require('mongoose')
+const Joi = require('joi')
+const { handleMongooseError } = require('../middlewares')
+
+const userSchema = new Schema(
+    {
+        email: {
+            type: String,
+            required: [true, 'Email is required'],
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: [true, 'Password is required'],
+        },
+        name: {
+            type: String,
+            required: [true, 'Name is required'],
+        },
+        region: {
+            type: String,
+            required: [true, 'Region is required'],
+        },
+        phone: {
+            type: Number,
+            required: [true, 'Phone is required'],
+        },
+        avatarURL: {
+            type: String,
+            required: true,
+        },
+        verify: {
+            type: Boolean,
+            default: false,
+        },
+        verificationToken: {
+            type: String,
+            required: [true, 'Verify token is required'],
+        },
+        token: {
+            type: String,
+            default: null,
+        },
+    },
+    { versionKey: false, timestamps: true }
+)
+
+userSchema.post('save', handleMongooseError)
+
+const registerSchema = Joi.object({
+    password: Joi.string().min(7).max(32).required(),
+    email: Joi.string().email().required(),
+    name: Joi.string().required(),
+    region: Joi.string().required(),
+    phone: Joi.number().required(),
+})
+
+const loginSchema = Joi.object({
+    password: Joi.string().required(),
+    email: Joi.string().email().required(),
+})
+
+const schemas = {
+    registerSchema,
+    loginSchema,
+}
+
+const User = model('user', userSchema)
+
+module.exports = {
+    User,
+    schemas,
+}
