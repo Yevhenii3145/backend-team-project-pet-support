@@ -11,8 +11,8 @@ const router = express.Router()
 //   // authenticate,
 //   ctrl.getNoticeByFavorite);
 // router.get("/search", ctrl.getNoticeByKeywodInTitle);
-// router.get("/notice/:noticeId", ctrl.getNoticeById);
-// router.get("/:categoryName", ctrl.getNoticesByCategory);
+router.get('/notice/:noticeId', ctrl.getNoticeById)
+router.get('/:categoryName', ctrl.getNoticesByCategories);
 router.post(
     '/notice',
     // authenticate,
