@@ -22,7 +22,7 @@ const userSchema = new Schema(
             required: [true, 'Region is required'],
         },
         phone: {
-            type: Number,
+            type: String,
             required: [true, 'Phone is required'],
         },
         avatarURL: {
