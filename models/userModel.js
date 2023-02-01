@@ -17,17 +17,16 @@ const userSchema = new Schema(
             type: String,
             required: [true, 'Name is required'],
         },
-        region: {
+        sity: {
             type: String,
             required: [true, 'Region is required'],
         },
         phone: {
-            type: Number,
+            type: String,
             required: [true, 'Phone is required'],
         },
         avatarURL: {
             type: String,
-            required: true,
         },
         verify: {
             type: Boolean,
@@ -51,8 +50,8 @@ const registerSchema = Joi.object({
     password: Joi.string().min(7).max(32).required(),
     email: Joi.string().email().required(),
     name: Joi.string().required(),
-    region: Joi.string().required(),
-    phone: Joi.number().required(),
+    sity: Joi.string().required(),
+    phone: Joi.string().required(),
 })
 
 const loginSchema = Joi.object({
