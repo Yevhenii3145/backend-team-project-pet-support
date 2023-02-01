@@ -1,0 +1,1143 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "2.0.0.",
+        "title": "Pet care documentation",
+        "description": "How to work with us to help pets faster and better"
+    },
+    "consumes": ["multipart/form-data"],
+    "produces": ["multipart/form-data"],
+    "servers": [{ "url": "http://localhost:4001/api" }],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authorization endpoints"
+        },
+        {
+            "name": "Notices",
+            "description": "Work with the advertises"
+        },
+        {
+            "name": "Users",
+            "description": "Work with user's profile"
+        }
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "User registration",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Registration body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful registration",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegistrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request(invalid request body)",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Such email already exists",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "User login",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Login body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid email or password",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/auth/{userId}": {
+            "put": {
+                "tags": ["Auth"],
+                "summary": "Update profile",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Update body",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful update",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You must authorize",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "User logout",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "204": {
+                        "description": "Successful logout"
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/users/current": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Get user by token",
+                "parameters": [{ "in": "path", "name": "userId" }],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrentUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/users/{userId}/pets": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "User's pets",
+                "parameters": [{ "in": "path", "name": "userId" }],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "multipart/form-data": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserPetsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/users/addPet": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Add pet's card",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Pets card request body",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetCardRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful add",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetCardResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid email or password",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/users/{petId}": {
+            "delete": {
+                "tags": ["Users"],
+                "summary": "Delete user's pets",
+                "parameters": [{ "in": "path", "name": "petId" }],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "204": {
+                        "description": "Successful logout"
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/{categoryName}": {
+            "get": {
+                "tags": ["Notices"],
+                "summary": "Get the notices by choosed category",
+                "parameters": [{ "in": "path", "name": "categoryName" }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NoticesByCategoryResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/{noticeId}": {
+            "get": {
+                "tags": ["Notices"],
+                "summary": "Get one notice",
+                "parameters": [{ "in": "path", "name": "noticeId" }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OneNoticeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/update/{noticeId}?favorites": {
+            "patch": {
+                "tags": ["Notices"],
+                "summary": "Update favorites",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "noticeId"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Change favourites",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FavoritesRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful changed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/FavoriteResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "You must authorize",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/{userId}?favorites": {
+            "get": {
+                "tags": ["Notices"],
+                "summary": "Get user's favorite notices",
+                "parameters": [
+                    { "in": "path", "name": "userId" },
+                    {
+                        "in": "query",
+                        "name": "favorites",
+                        "type": "boolean",
+                        "default": "true"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserFavoritesResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/delete/{noticeId}?favorites": {
+            "delete": {
+                "tags": ["Notices"],
+                "summary": "Delete notice from favorite",
+                "parameters": [
+                    { "in": "path", "name": "noticeId" },
+                    {
+                        "in": "query",
+                        "name": "favorites",
+                        "type": "boolean",
+                        "default": "true"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "204": {
+                        "description": "Successful delete"
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/addNotice": {
+            "post": {
+                "tags": ["Notices"],
+                "summary": "Add notice according to the category",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Add your request body",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddNoticeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful add",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddNoticeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/{userId}/userNotices": {
+            "get": {
+                "tags": ["Notices"],
+                "summary": "User's notices",
+                "parameters": [{ "in": "path", "name": "userId" }],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserNoticesResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/notices/delete/{noticeId}": {
+            "delete": {
+                "tags": ["Notices"],
+                "summary": "Delete user's notices",
+                "parameters": [{ "in": "path", "name": "petId" }],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "204": {
+                        "description": "Successful logout"
+                    },
+                    "401": {
+                        "description": "Not authorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        }
+    },
+
+    "components": {
+        "schemas": {
+            "RegistrationRequest": {
+                "type": "object",
+                "required": ["email", "password", "name", "city", "phone"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "example123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "John Smith"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "User's city",
+                        "example": "Kiyv"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    }
+                }
+            },
+            "RegistrationResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "John Smith"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "User's city",
+                        "example": "Kiyv"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "4t884487548574"
+                    }
+                }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "example123"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "4t884487548574"
+                    }
+                }
+            },
+            "UpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "John Smith"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "User's city",
+                        "example": "Kiyv"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "PetCardRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's pet name",
+                        "example": "Rich"
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "23.01.2016"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments about your pet",
+                        "example": "The best pet ever"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "UpdateResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "John Smith"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "User's city",
+                        "example": "Kiyv"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "User's picture path"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "description": "User's id",
+                        "example": "4t884487548574"
+                    }
+                }
+            },
+            "CurrentUserResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name",
+                        "example": "John Smith"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    },
+                    "city": {
+                        "type": "string",
+                        "description": "User's city",
+                        "example": "Kiyv"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "User's photo"
+                    }
+                }
+            },
+            "UserPetsResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Pet's name",
+                        "example": "Kitty"
+                    },
+                    "birth": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "22.04.16"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                }
+            },
+            "PetCardResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's pet name",
+                        "example": "Rich"
+                    },
+                    "date": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "23.01.2016"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments about your pet",
+                        "example": "The best pet ever"
+                    },
+                    "petId": {
+                        "type": "string",
+                        "description": "Pet id",
+                        "example": "4544545"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            },
+            "NoticesByCategoryResponse": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the ad",
+                        "example": "The dog is looking for home"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "place": {
+                        "type": "string",
+                        "description": "City",
+                        "example": "Odessa"
+                    },
+                    "age": {
+                        "type": "string",
+                        "description": "Pet's age",
+                        "example": "one year"
+                    },
+                    "price": {
+                        "type": "string",
+                        "description": "Pet's price",
+                        "example": "50$"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            },
+            "OneNoticeResponse": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Pet's category",
+                        "example": "for sale"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the ad",
+                        "example": "The dog is looking for home"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the pet",
+                        "example": "Rich"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "22.04.16"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "City",
+                        "example": "Odessa"
+                    },
+                    "theSex": {
+                        "type": "string",
+                        "description": "The sex of the the pet",
+                        "example": "girl"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments about pet",
+                        "example": "The best pet ever"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            },
+            "FavoritesRequest": {
+                "type": "object",
+                "properties": {
+                    "favorite": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "FavoriteResponse": {
+                "type": "object",
+                "properties": {
+                    "favorite": {
+                        "type": "boolean"
+                    },
+                    "noticeId": {
+                        "type": "string",
+                        "example": "34343434334"
+                    }
+                }
+            },
+            "UserFavoritesResponse": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Pet's category",
+                        "example": "for sale"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the ad",
+                        "example": "The dog is looking for home"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the pet",
+                        "example": "Rich"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "22.04.16"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "City",
+                        "example": "Odessa"
+                    },
+                    "theSex": {
+                        "type": "string",
+                        "description": "The sex of the the pet",
+                        "example": "girl"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments about pet",
+                        "example": "The best pet ever"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            },
+            "AddNoticeRequest": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Pet's category",
+                        "example": "for sale"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the ad",
+                        "example": "The dog is looking for home"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the pet",
+                        "example": "Rich"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "22.04.16"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "City",
+                        "example": "Odessa"
+                    },
+                    "theSex": {
+                        "type": "string",
+                        "description": "The sex of the the pet",
+                        "example": "girl"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments about pet",
+                        "example": "The best pet ever"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            },
+            "AddNoticeResponse": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Pet's category",
+                        "example": "for sale"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the ad",
+                        "example": "The dog is looking for home"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the pet",
+                        "example": "Rich"
+                    },
+                    "birthday": {
+                        "type": "string",
+                        "description": "Pet's date of birth",
+                        "example": "22.04.16"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "location": {
+                        "type": "string",
+                        "description": "City",
+                        "example": "Odessa"
+                    },
+                    "theSex": {
+                        "type": "string",
+                        "description": "The sex of the the pet",
+                        "example": "girl"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "User's phone number",
+                        "example": "+3800000000"
+                    },
+                    "comments": {
+                        "type": "string",
+                        "description": "Comments about pet",
+                        "example": "The best pet ever"
+                    },
+                    "petId": {
+                        "type": "string",
+                        "description": "Id of the notice",
+                        "example": "56565656565"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            },
+            "UserNoticesResponse": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Pet's category",
+                        "example": "for sale"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the ad",
+                        "example": "The dog is looking for home"
+                    },
+                    "breed": {
+                        "type": "string",
+                        "description": "Pet's breed",
+                        "example": "dachshund"
+                    },
+                    "place": {
+                        "type": "string",
+                        "description": "City",
+                        "example": "Odessa"
+                    },
+                    "age": {
+                        "type": "string",
+                        "description": "Pet's age",
+                        "example": "one year"
+                    },
+                    "price": {
+                        "type": "string",
+                        "description": "Pet's price",
+                        "example": "50$"
+                    },
+                    "image": {
+                        "type": "string",
+                        "description": "Pet's image"
+                    }
+                }
+            }
+        },
+        "encoding": {
+            "image": {
+                "contentType": "image/png, image/jpeg"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
