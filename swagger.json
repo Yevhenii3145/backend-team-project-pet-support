@@ -28,7 +28,6 @@
                 "tags": ["Auth"],
                 "summary": "User registration",
                 "parameters": [],
-                "security": [{ "Bearer": [] }],
                 "requestBody": {
                     "description": "Registration body",
                     "required": true,
@@ -56,7 +55,7 @@
                         "content": {}
                     },
                     "409": {
-                        "description": "Such email already exists",
+                        "description": "Conflict(Such email already exists)",
                         "content": {}
                     }
                 }
@@ -80,7 +79,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Successful login",
                         "content": {
                             "application/json": {
@@ -124,7 +123,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Successful update",
                         "content": {
                             "application/json": {
@@ -135,7 +134,7 @@
                         }
                     },
                     "401": {
-                        "description": "You must authorize",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
@@ -156,7 +155,7 @@
                         "description": "Successful logout"
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
@@ -166,11 +165,32 @@
                 }
             }
         },
+        "/auth/verify": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "User autentification",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "responses": {
+                    "201": {
+                        "description": "User verified successfuly"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
         "/users/current": {
             "get": {
                 "tags": ["Users"],
                 "summary": "Get user by token",
-                "parameters": [{ "in": "path", "name": "userId" }],
+                "parameters": [],
                 "security": [{ "Bearer": [] }],
                 "responses": {
                     "200": {
@@ -184,7 +204,7 @@
                         }
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
@@ -204,7 +224,7 @@
                     "200": {
                         "description": "Success",
                         "content": {
-                            "multipart/form-data": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UserPetsResponse"
                                 }
@@ -212,11 +232,11 @@
                         }
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
-                    "403": {
-                        "description": "Forbidden",
+                    "404": {
+                        "description": "Not found",
                         "content": {}
                     }
                 }
@@ -251,12 +271,15 @@
                         }
                     },
                     "401": {
-                        "description": "Invalid email or password",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
                         "description": "Forbidden",
                         "content": {}
+                    },
+                    "409": {
+                        "description": "Conflict"
                     }
                 }
             }
@@ -264,19 +287,19 @@
         "/users/{petId}": {
             "delete": {
                 "tags": ["Users"],
-                "summary": "Delete user's pets",
+                "summary": "Delete user's pet card",
                 "parameters": [{ "in": "path", "name": "petId" }],
                 "security": [{ "Bearer": [] }],
                 "responses": {
                     "204": {
-                        "description": "Successful logout"
+                        "description": "Successful delete"
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
-                    "403": {
-                        "description": "Forbidden",
+                    "404": {
+                        "description": "Not found",
                         "content": {}
                     }
                 }
@@ -298,10 +321,6 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
-                        "content": {}
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {}
@@ -309,7 +328,7 @@
                 }
             }
         },
-        "/notices/{noticeId}": {
+        "/notices/notice/{noticeId}": {
             "get": {
                 "tags": ["Notices"],
                 "summary": "Get one notice",
@@ -325,10 +344,6 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
-                        "content": {}
-                    },
                     "404": {
                         "description": "Not found",
                         "content": {}
@@ -336,7 +351,7 @@
                 }
             }
         },
-        "/notices/update/{noticeId}?favorites": {
+        "/notices/{noticeId}/favorites": {
             "patch": {
                 "tags": ["Notices"],
                 "summary": "Update favorites",
@@ -348,7 +363,7 @@
                 ],
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
-                    "description": "Change favourites",
+                    "description": "Update favourites request body",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -360,7 +375,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Successful changed",
+                        "description": "Successful updated",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -370,11 +385,11 @@
                         }
                     },
                     "401": {
-                        "description": "You must authorize",
+                        "description": "Unauthorized",
                         "content": {}
                     },
-                    "403": {
-                        "description": "Forbidden",
+                    "404": {
+                        "description": "Not found",
                         "content": {}
                     }
                 }
@@ -405,8 +420,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
+                    "401": {
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "404": {
@@ -416,10 +431,10 @@
                 }
             }
         },
-        "/notices/delete/{noticeId}?favorites": {
+        "/notices/{noticeId}?favorites": {
             "delete": {
                 "tags": ["Notices"],
-                "summary": "Delete notice from favorite",
+                "summary": "Delete notice from favorites",
                 "parameters": [
                     { "in": "path", "name": "noticeId" },
                     {
@@ -435,11 +450,15 @@
                         "description": "Successful delete"
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
                         "description": "Forbidden",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
                         "content": {}
                     }
                 }
@@ -452,7 +471,7 @@
                 "parameters": [],
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
-                    "description": "Add your request body",
+                    "description": "Add notice request body",
                     "required": true,
                     "content": {
                         "multipart/form-data": {
@@ -464,7 +483,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Successful add",
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -474,7 +493,7 @@
                         }
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
@@ -502,39 +521,42 @@
                         }
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
-                    "403": {
-                        "description": "Forbidden",
+                    "404": {
+                        "description": "Not found",
                         "content": {}
                     }
                 }
             }
         },
-        "/notices/delete/{noticeId}": {
+        "/notices/{noticeId}": {
             "delete": {
                 "tags": ["Notices"],
                 "summary": "Delete user's notices",
-                "parameters": [{ "in": "path", "name": "petId" }],
+                "parameters": [{ "in": "path", "name": "noticeId" }],
                 "security": [{ "Bearer": [] }],
                 "responses": {
                     "204": {
-                        "description": "Successful logout"
+                        "description": "Successful delete"
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Unauthorized",
                         "content": {}
                     },
                     "403": {
                         "description": "Forbidden",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
                         "content": {}
                     }
                 }
             }
         }
     },
-
     "components": {
         "schemas": {
             "RegistrationRequest": {
@@ -666,7 +688,7 @@
                         "description": "User's pet name",
                         "example": "Rich"
                     },
-                    "date": {
+                    "birthday": {
                         "type": "string",
                         "description": "Pet's date of birth",
                         "example": "23.01.2016"
@@ -758,7 +780,7 @@
                         "description": "Pet's name",
                         "example": "Kitty"
                     },
-                    "birth": {
+                    "birthday": {
                         "type": "string",
                         "description": "Pet's date of birth",
                         "example": "22.04.16"
@@ -786,7 +808,7 @@
                         "description": "User's pet name",
                         "example": "Rich"
                     },
-                    "date": {
+                    "birthday": {
                         "type": "string",
                         "description": "Pet's date of birth",
                         "example": "23.01.2016"
@@ -815,6 +837,11 @@
             "NoticesByCategoryResponse": {
                 "type": "object",
                 "properties": {
+                    "category": {
+                        "type": "string",
+                        "description": "Pet's category",
+                        "example": "for sale"
+                    },
                     "title": {
                         "type": "string",
                         "description": "Title of the ad",
@@ -907,8 +934,9 @@
             },
             "FavoritesRequest": {
                 "type": "object",
+                "required": ["favorites"],
                 "properties": {
-                    "favorite": {
+                    "favorites": {
                         "type": "boolean"
                     }
                 }
@@ -916,7 +944,7 @@
             "FavoriteResponse": {
                 "type": "object",
                 "properties": {
-                    "favorite": {
+                    "favorites": {
                         "type": "boolean"
                     },
                     "noticeId": {
@@ -958,7 +986,7 @@
                         "description": "City",
                         "example": "Odessa"
                     },
-                    "theSex": {
+                    "sex": {
                         "type": "string",
                         "description": "The sex of the the pet",
                         "example": "girl"
@@ -976,6 +1004,7 @@
             },
             "AddNoticeRequest": {
                 "type": "object",
+                "required": ["category", "title", "sex", "location", "price"],
                 "properties": {
                     "category": {
                         "type": "string",
@@ -1056,20 +1085,10 @@
                         "description": "City",
                         "example": "Odessa"
                     },
-                    "theSex": {
+                    "sex": {
                         "type": "string",
                         "description": "The sex of the the pet",
                         "example": "girl"
-                    },
-                    "email": {
-                        "type": "string",
-                        "description": "User's email",
-                        "format": "email"
-                    },
-                    "phone": {
-                        "type": "string",
-                        "description": "User's phone number",
-                        "example": "+3800000000"
                     },
                     "comments": {
                         "type": "string",
