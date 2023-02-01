@@ -21,7 +21,6 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "bcryptjs": "^2.4.3",
-    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
@@ -36,7 +35,8 @@
     "nanoid": "^4.0.0",
     "supertest": "^6.3.3",
     "swagger-ui-express": "^4.6.0",
-    "ws": "^8.12.0"
+    "ws": "^8.12.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "eslint": "^8.32.0",
