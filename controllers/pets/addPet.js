@@ -1,11 +1,11 @@
 const path = require('path')
 const fs = require('fs/promises')
 const { HttpError, resize } = require('../../helpers')
-const { Notice } = require('../../models/noticeModel')
+const { Pet } = require('../../models/petModel')
 
 const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
 
-const addNoticeByCategory = async (req, res) => {
+const addPet = async (req, res) => {
     // const {_id: owner} = req.user;
     if (!req.file) {
         throw HttpError(400, 'Avatar is required')
@@ -16,17 +16,22 @@ const addNoticeByCategory = async (req, res) => {
     const resultUpload = path.join(avatarsDir, FileName)
 
     await resize(tempUpload, resultUpload)
-    await fs.unlink(tempUpload)
+
+    fs.unlink(req.file.path)
     const avatarURL = path.join('avatars', FileName)
     console.log(avatarURL)
-    const result = await Notice.create({
+
+
+    const newPet = await Pet.create({
         ...req.body,
-        petImage: avatarURL,
+        petAvatar: avatarURL,
         // owner,
     })
 
-
-    res.status(201).json({ notice: result })
+    res.status(201).json({
+        message: 'success',
+        newPet,
+    })
 }
 
-module.exports = addNoticeByCategory
+module.exports = addPet
