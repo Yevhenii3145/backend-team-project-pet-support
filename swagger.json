@@ -202,6 +202,38 @@
                 }
             }
         },
+        "/auth/verify": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Resend verification code",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Resend verification body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResendVerificationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "We resent your verification code"
+                    },
+                    "400": {
+                        "description": "You already verified",
+                        "content": {}
+                    },
+
+                    "404": {
+                        "description": "User not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
         "/users/current": {
             "get": {
                 "tags": ["Users"],
@@ -586,7 +618,8 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "format": "email",
+                        "unique": true
                     },
                     "password": {
                         "type": "string",
@@ -647,7 +680,8 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "format": "email",
+                        "unique": true
                     },
                     "password": {
                         "type": "string",
@@ -673,6 +707,21 @@
                         "type": "string",
                         "description": "Authorization token",
                         "example": "43846837438783784"
+                    }
+                }
+            },
+            "ResendVerificationRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "example123"
                     }
                 }
             },
