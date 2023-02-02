@@ -10,7 +10,6 @@ const router = express.Router()
 // router.get("/favorite",
 //   // authenticate,
 //   ctrl.getNoticeByFavorite);
-// router.get("/search", ctrl.getNoticeByKeywodInTitle);
 router.get('/notice/:noticeId', ctrl.getNoticeById)
 router.get('/:categoryName', ctrl.getNoticesByCategories);
 router.post(
@@ -22,8 +21,10 @@ router.post(
 // router.patch("/:noticeId",
 //   // authenticate,
 //   ctrl.updateFavorite);
-// router.delete("/:noticeId",
-//   // authenticate,
-//   ctrl.deleteNoticeById);
+router.delete(
+    '/delete/:noticeId',
+    // authenticate,
+    ctrl.deleteNoticeById
+)
 
 module.exports = router
