@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "version": "2.0.0.",
+        "version": "2.0.3.",
         "title": "Pet care documentation",
         "description": "How to work with us to help pets faster and better"
     },
@@ -104,28 +104,25 @@
                 }
             }
         },
-        "/auth/{userId}": {
-            "put": {
+        "/auth/update": {
+            "patch": {
                 "tags": ["Auth"],
                 "summary": "Update profile",
                 "parameters": [
                     {
-                        "in": "path",
-                        "name": "userId"
+                        "in": "query",
+                        "name": "params",
+                        "schema": {
+                            "type": "object",
+                            "yourField": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "security": [{ "Bearer": [] }],
-                "requestBody": {
-                    "description": "Update body",
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UpdateRequest"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "201": {
                         "description": "Successful update",
@@ -443,7 +440,7 @@
                 }
             }
         },
-        "/notices/{userId}?favorites": {
+        "/notices/{userId}": {
             "get": {
                 "tags": ["Notices"],
                 "summary": "Get user's favorite notices",
@@ -725,35 +722,6 @@
                     }
                 }
             },
-            "UpdateRequest": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "User's name",
-                        "example": "John Smith"
-                    },
-                    "email": {
-                        "type": "string",
-                        "description": "User's email",
-                        "format": "email"
-                    },
-                    "phone": {
-                        "type": "string",
-                        "description": "User's phone number",
-                        "example": "+3800000000"
-                    },
-                    "city": {
-                        "type": "string",
-                        "description": "User's city",
-                        "example": "Kiyv"
-                    },
-                    "image": {
-                        "type": "string",
-                        "format": "binary"
-                    }
-                }
-            },
             "PetCardRequest": {
                 "type": "object",
                 "properties": {
@@ -786,34 +754,15 @@
             "UpdateResponse": {
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "field": {
                         "type": "string",
-                        "description": "User's name",
-                        "example": "John Smith"
+                        "description": "Updating field",
+                        "example": "name"
                     },
-                    "email": {
+                    "value": {
                         "type": "string",
-                        "description": "User's email",
-                        "format": "email"
-                    },
-                    "phone": {
-                        "type": "string",
-                        "description": "User's phone number",
-                        "example": "+3800000000"
-                    },
-                    "city": {
-                        "type": "string",
-                        "description": "User's city",
-                        "example": "Kiyv"
-                    },
-                    "image": {
-                        "type": "string",
-                        "description": "User's picture path"
-                    },
-                    "userId": {
-                        "type": "string",
-                        "description": "User's id",
-                        "example": "4t884487548574"
+                        "description": "New value",
+                        "example": "Kristina"
                     }
                 }
             },
