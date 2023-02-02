@@ -111,11 +111,15 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "name": "field"
-                    },
-                    {
-                        "in": "query",
-                        "name": "value"
+                        "name": "params",
+                        "schema": {
+                            "type": "object",
+                            "yourField": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true
                     }
                 ],
                 "security": [{ "Bearer": [] }],
