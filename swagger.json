@@ -177,18 +177,18 @@
                 }
             }
         },
-        "/auth/verify": {
-            "post": {
+        "/auth/verify/{verificationToken}": {
+            "get": {
                 "tags": ["Auth"],
-                "summary": "User autentification",
-                "parameters": [],
+                "summary": "User verification",
+                "parameters": [{ "in": "path", "name": "verificationToken" }],
                 "security": [{ "Bearer": [] }],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "User verified successfuly"
                     },
                     "400": {
-                        "description": "Bad request",
+                        "description": "User nоt found or verification already done!",
                         "content": {}
                     },
                     "401": {
@@ -197,6 +197,38 @@
                     },
                     "404": {
                         "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/auth/verify": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Resend verification code",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Resend verification body",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResendVerificationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "We resent your verification code"
+                    },
+                    "400": {
+                        "description": "You already verified",
+                        "content": {}
+                    },
+
+                    "404": {
+                        "description": "User not found",
                         "content": {}
                     }
                 }
@@ -586,7 +618,8 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "format": "email",
+                        "unique": true
                     },
                     "password": {
                         "type": "string",
@@ -647,7 +680,8 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "format": "email",
+                        "unique": true
                     },
                     "password": {
                         "type": "string",
@@ -668,6 +702,26 @@
                         "type": "string",
                         "description": "User's id",
                         "example": "4t884487548574"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Authorization token",
+                        "example": "43846837438783784"
+                    }
+                }
+            },
+            "ResendVerificationRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "example123"
                     }
                 }
             },
