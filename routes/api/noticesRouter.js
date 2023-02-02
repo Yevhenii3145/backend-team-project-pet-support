@@ -22,7 +22,7 @@ router.post(
 //   // authenticate,
 //   ctrl.updateFavorite);
 router.delete(
-    '/delete/:noticeId',
+    '/:noticeId',
     // authenticate,
     ctrl.deleteNoticeById
 )
