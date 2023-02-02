@@ -6,7 +6,7 @@ const router = new express.Router()
 
 const { ctrlWrapper } = require('../../helpers')
 
-const { validateBody, upload } = require('../../middlewares')
+const { validateBody } = require('../../middlewares')
 
 const { schemas } = require('../../models/userModel')
 
@@ -26,25 +26,12 @@ router.post(
 
 router.post('/logout', ctrl.authentification, ctrlWrapper(ctrl.logout))
 
-// router.get('/current', ctrl.authenticate, ctrlWrapper(ctrl.getCurrent))
+router.post(
+    '/verify',
+    validateBody(schemas.loginSchema),
+    ctrlWrapper(ctrl.resendVerifyEmail)
+)
 
-// router.post(
-//     '/verify',
-//     validateBody(schemas.verifySchema),
-//     ctrlWrapper(ctrl.resendVerifyEmail)
-// )
-
-// router.patch(
-//     '/',
-//     ctrl.authenticate,
-//     validateBody(schemas.updateSubscriptionSchema),
-//     ctrlWrapper(ctrl.updateSubscription)
-// )
-// router.patch(
-//     '/avatars',
-//     ctrl.authenticate,
-//     upload.single('avatar'),
-//     ctrlWrapper(ctrl.updateAvatar)
-// )
+router.patch('/update', ctrl.authentification, ctrlWrapper(ctrl.updateUserData))
 
 module.exports = router
