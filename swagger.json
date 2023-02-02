@@ -718,35 +718,6 @@
                     }
                 }
             },
-            "UpdateRequest": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "User's name",
-                        "example": "John Smith"
-                    },
-                    "email": {
-                        "type": "string",
-                        "description": "User's email",
-                        "format": "email"
-                    },
-                    "phone": {
-                        "type": "string",
-                        "description": "User's phone number",
-                        "example": "+3800000000"
-                    },
-                    "city": {
-                        "type": "string",
-                        "description": "User's city",
-                        "example": "Kiyv"
-                    },
-                    "image": {
-                        "type": "string",
-                        "format": "binary"
-                    }
-                }
-            },
             "PetCardRequest": {
                 "type": "object",
                 "properties": {
