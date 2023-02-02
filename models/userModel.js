@@ -17,7 +17,7 @@ const userSchema = new Schema(
             type: String,
             required: [true, 'Name is required'],
         },
-        sity: {
+        city: {
             type: String,
             required: [true, 'Region is required'],
         },
@@ -50,7 +50,7 @@ const registerSchema = Joi.object({
     password: Joi.string().min(7).max(32).required(),
     email: Joi.string().email().required(),
     name: Joi.string().required(),
-    sity: Joi.string().required(),
+    city: Joi.string().required(),
     phone: Joi.string().required(),
 })
 

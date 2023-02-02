@@ -188,7 +188,7 @@
                         "description": "User verified successfuly"
                     },
                     "400": {
-                        "description": "Bad request",
+                        "description": "User nоt found or verification already done!",
                         "content": {}
                     },
                     "401": {
@@ -637,6 +637,16 @@
                         "type": "string",
                         "description": "User's id",
                         "example": "4t884487548574"
+                    },
+                    "verify": {
+                        "type": "boolean",
+                        "description": "Verification status",
+                        "default": false
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Authorization token",
+                        "example": "43846837438783784"
                     }
                 }
             },
@@ -668,6 +678,16 @@
                         "type": "string",
                         "description": "User's id",
                         "example": "4t884487548574"
+                    },
+                    "verify": {
+                        "type": "boolean",
+                        "description": "Verification status",
+                        "default": false
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Authorization token",
+                        "example": "43846837438783784"
                     }
                 }
             },
