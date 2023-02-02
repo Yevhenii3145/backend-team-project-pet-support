@@ -638,11 +638,6 @@
                         "description": "User's id",
                         "example": "4t884487548574"
                     },
-                    "verify": {
-                        "type": "boolean",
-                        "description": "Verification status",
-                        "default": false
-                    },
                     "token": {
                         "type": "string",
                         "description": "Authorization token",
@@ -678,11 +673,6 @@
                         "type": "string",
                         "description": "User's id",
                         "example": "4t884487548574"
-                    },
-                    "verify": {
-                        "type": "boolean",
-                        "description": "Verification status",
-                        "default": false
                     },
                     "token": {
                         "type": "string",
