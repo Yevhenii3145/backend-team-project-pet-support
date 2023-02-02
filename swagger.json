@@ -637,11 +637,6 @@
                         "type": "string",
                         "description": "User's id",
                         "example": "4t884487548574"
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "Authorization token",
-                        "example": "43846837438783784"
                     }
                 }
             },
