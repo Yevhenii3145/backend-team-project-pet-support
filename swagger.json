@@ -177,14 +177,14 @@
                 }
             }
         },
-        "/auth/verify": {
-            "post": {
+        "/auth/verify/{verificationToken}": {
+            "get": {
                 "tags": ["Auth"],
-                "summary": "User autentification",
-                "parameters": [],
+                "summary": "User verification",
+                "parameters": [{ "in": "path", "name": "verificationToken" }],
                 "security": [{ "Bearer": [] }],
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "User verified successfuly"
                     },
                     "400": {
