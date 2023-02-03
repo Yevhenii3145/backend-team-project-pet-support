@@ -26,6 +26,6 @@ router.post(
 //   // authenticate,
 //   ctrl.deleteNoticeById);
 
-router.get('/keyword', ctrl.searchByKeyWord)
+router.get('/search', ctrl.searchByKeyWord)
 
 module.exports = router

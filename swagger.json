@@ -607,6 +607,30 @@
                     }
                 }
             }
+        },
+        "/notices/search": {
+            "get": {
+                "tags": ["Notices"],
+                "summary": "Search by key word",
+                "parameters": [{ "in": "query", "name": "keyword" }],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {}
+                    }
+                }
+            }
         }
     },
     "components": {
