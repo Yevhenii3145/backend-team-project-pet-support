@@ -11,7 +11,7 @@ const router = express.Router()
 //   // authenticate,
 //   ctrl.getNoticeByFavorite);
 router.get('/notice/:noticeId', ctrl.getNoticeById)
-router.get('/:categoryName', ctrl.getNoticesByCategories);
+router.get('/:categoryName', ctrl.getNoticesByCategories)
 router.post(
     '/notice',
     // authenticate,
@@ -26,5 +26,7 @@ router.delete(
     // authenticate,
     ctrl.deleteNoticeById
 )
+
+router.get('/search', ctrl.searchByKeyWord)
 
 module.exports = router
