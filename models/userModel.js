@@ -52,7 +52,7 @@ const registerSchema = Joi.object({
     email: Joi.string().email().required(),
     name: Joi.string().required(),
     city: Joi.string().required(),
-    phone: Joi.string().required(),
+    phone: Joi.string().min(12).max(12).required(),
 })
 
 const loginSchema = Joi.object({
@@ -60,9 +60,17 @@ const loginSchema = Joi.object({
     email: Joi.string().email().required(),
 })
 
+const updateSchema = Joi.object({
+    email: Joi.string().email(),
+    name: Joi.string(),
+    city: Joi.string(),
+    phone: Joi.string().min(12).max(12),
+})
+
 const schemas = {
     registerSchema,
     loginSchema,
+    updateSchema,
 }
 
 const User = model('user', userSchema)
