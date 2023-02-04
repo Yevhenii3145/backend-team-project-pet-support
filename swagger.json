@@ -111,7 +111,7 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "name": "params",
+                        "name": "Your field and it's value",
                         "schema": {
                             "type": "object",
                             "yourField": {
@@ -130,6 +130,49 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UpdateResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {}
+                    }
+                }
+            }
+        },
+        "/auth/update/avatar": {
+            "patch": {
+                "tags": ["Auth"],
+                "summary": "Update profile avatar",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Updating profile avatar",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateAvatarRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful update",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateAvatarResponse"
                                 }
                             }
                         }
@@ -660,7 +703,7 @@
                     "phone": {
                         "type": "string",
                         "description": "User's phone number",
-                        "example": "+3800000000"
+                        "example": "3800000000"
                     }
                 }
             },
@@ -680,7 +723,7 @@
                     "phone": {
                         "type": "string",
                         "description": "User's phone number",
-                        "example": "+3800000000"
+                        "example": "3800000000"
                     },
                     "city": {
                         "type": "string",
@@ -756,6 +799,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "23.01.2016"
                     },
@@ -778,15 +822,27 @@
             "UpdateResponse": {
                 "type": "object",
                 "properties": {
-                    "field": {
+                    "query": {
                         "type": "string",
                         "description": "Updating field",
-                        "example": "name"
-                    },
-                    "value": {
+                        "example": "value"
+                    }
+                }
+            },
+            "UpdateAvatarRequest": {
+                "type": "object",
+                "properties": {
+                    "avatarURL": {
                         "type": "string",
-                        "description": "New value",
-                        "example": "Kristina"
+                        "format": "binary"
+                    }
+                }
+            },
+            "UpdateAvatarResponse": {
+                "type": "object",
+                "properties": {
+                    "avatarURL": {
+                        "type": "string"
                     }
                 }
             },
@@ -806,14 +862,14 @@
                     "phone": {
                         "type": "string",
                         "description": "User's phone number",
-                        "example": "+3800000000"
+                        "example": "3800000000"
                     },
                     "city": {
                         "type": "string",
                         "description": "User's city",
                         "example": "Kiyv"
                     },
-                    "image": {
+                    "avatarURL": {
                         "type": "string",
                         "description": "User's photo"
                     }
@@ -829,6 +885,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "22.04.16"
                     },
@@ -857,6 +914,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "23.01.2016"
                     },
@@ -894,6 +952,12 @@
                         "description": "Title of the ad",
                         "example": "The dog is looking for home"
                     },
+                    "birthday": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "Pet's birthday to count age",
+                        "example": "23.01.2016"
+                    },
                     "breed": {
                         "type": "string",
                         "description": "Pet's breed",
@@ -903,11 +967,6 @@
                         "type": "string",
                         "description": "City",
                         "example": "Odessa"
-                    },
-                    "age": {
-                        "type": "string",
-                        "description": "Pet's age",
-                        "example": "one year"
                     },
                     "price": {
                         "type": "string",
@@ -940,6 +999,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "22.04.16"
                     },
@@ -953,7 +1013,7 @@
                         "description": "City",
                         "example": "Odessa"
                     },
-                    "theSex": {
+                    "sex": {
                         "type": "string",
                         "description": "The sex of the the pet",
                         "example": "girl"
@@ -966,7 +1026,7 @@
                     "phone": {
                         "type": "string",
                         "description": "User's phone number",
-                        "example": "+3800000000"
+                        "example": "3800000000"
                     },
                     "comments": {
                         "type": "string",
@@ -1020,6 +1080,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "22.04.16"
                     },
@@ -1056,7 +1117,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
@@ -1070,6 +1131,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "22.04.16"
                     },
@@ -1083,7 +1145,7 @@
                         "description": "City",
                         "example": "Odessa"
                     },
-                    "theSex": {
+                    "sex": {
                         "type": "string",
                         "description": "The sex of the the pet",
                         "example": "girl"
@@ -1119,6 +1181,7 @@
                     },
                     "birthday": {
                         "type": "string",
+                        "format": "date",
                         "description": "Pet's date of birth",
                         "example": "22.04.16"
                     },
@@ -1176,10 +1239,11 @@
                         "description": "City",
                         "example": "Odessa"
                     },
-                    "age": {
+                    "birthday": {
                         "type": "string",
-                        "description": "Pet's age",
-                        "example": "one year"
+                        "format": "date",
+                        "description": "Pet's date of birth",
+                        "example": "22.04.16"
                     },
                     "price": {
                         "type": "string",
