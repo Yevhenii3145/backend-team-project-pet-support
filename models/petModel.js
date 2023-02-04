@@ -6,30 +6,30 @@ const petSchema = new Schema(
     {
         name: {
             type: String,
-            required: [true, 'Set name for pets'],
+            required: [true, 'Set name for pet'],
         },
         birthday: {
-            type: Date,
-            default: new Date(),
+            type: String,
+            required: [true, 'Set birthday for pet'],
         },
         breed: {
             type: String,
-            default: '',
+            required: [true, 'Set breed of pet'],
         },
         comments: {
             type: String,
-            default: '',
+            required: [true, 'Set comments about pet'],
         },
-        petAvatar: {
+        image: {
             type: String,
             default: '',
-            required: false,
+            required: true,
         },
-        // owner: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: 'user',
-        //     // required: true,
-        // },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+            required: [true, 'Set owner'],
+        },
     },
     { versionKey: false, timestamps: true }
 )
@@ -37,11 +37,10 @@ const petSchema = new Schema(
 petSchema.post('save', handleMongooseError)
 
 const addPetSchema = Joi.object({
-    name: Joi.string().required(),
-    birthday: Joi.string(),
-    breed: Joi.string().min(2).max(16),
-    comments: Joi.string().min(8).max(120),
-    // avatar: Joi.string().required(),
+    name: Joi.string().min(2).max(16).required(),
+    birthday: Joi.string().required(),
+    breed: Joi.string().min(2).max(16).required(),
+    comments: Joi.string().min(8).max(120).required(),
 })
 
 const schemasPet = { addPetSchema }
