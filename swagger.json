@@ -439,7 +439,7 @@
                 }
             }
         },
-        "/notices/{noticeId}/favorites": {
+        "/notices/favorites/{noticeId}": {
             "patch": {
                 "tags": ["Notices"],
                 "summary": "Update favorites",
