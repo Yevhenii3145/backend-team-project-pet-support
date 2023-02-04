@@ -6,6 +6,7 @@ const authentification = require('./authentification')
 const resendVerifyEmail = require('./resendVerifyEmail')
 const updateUserData = require('./updateUserData')
 const updateUserAvatar = require('./updateUserAvatar')
+const google = require('./google')
 
 module.exports = {
     register,
@@ -16,4 +17,5 @@ module.exports = {
     resendVerifyEmail,
     updateUserData,
     updateUserAvatar,
+    google,
 }
