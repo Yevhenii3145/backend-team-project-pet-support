@@ -52,7 +52,7 @@ const registerSchema = Joi.object({
     email: Joi.string().email().required(),
     name: Joi.string().required(),
     city: Joi.string().required(),
-    phone: Joi.string().min(13).max(13).required(),
+    phone: Joi.string().min(12).max(12).required(),
 })
 
 const loginSchema = Joi.object({
