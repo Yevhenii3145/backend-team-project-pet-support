@@ -21,7 +21,7 @@ const addNoticeByCategory = async (req, res) => {
     console.log(avatarURL)
     const result = await Notice.create({
         ...req.body,
-        petImage: avatarURL,
+        image: avatarURL,
         // owner,
     })
 

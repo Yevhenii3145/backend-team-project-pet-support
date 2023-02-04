@@ -4,57 +4,57 @@ const Joi = require('joi');
 const { handleMongooseError } = require('../middlewares');
 
 const noticeSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: [true, 'Type a title'],
+    {
+        title: {
+            type: String,
+            required: [true, 'Type a title'],
+        },
+        name: {
+            type: String,
+            required: [true, "Type the pet's name"],
+        },
+        birthday: {
+            type: Date,
+            required: true,
+        },
+        breed: {
+            type: String,
+            default: '',
+        },
+        sex: {
+            type: String,
+            enum: ['male', 'female'],
+            default: 'male',
+        },
+        place: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: Number,
+            default: 0,
+        },
+        image: {
+            type: String,
+            required: false,
+        },
+        comments: {
+            type: String,
+            default: '',
+        },
+        category: {
+            type: String,
+            enum: ['lost-found', 'in-good-hands', 'sell'],
+            required: true,
+        },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+            // required: true,
+        },
     },
-    petName: {
-      type: String,
-      required: [true, "Type the pet's name"],
-    },
-    petDateOfBirth: {
-      type: Date,
-      required: true,
-    },
-    petBreed: {
-      type: String,
-      default: '',
-    },
-    petSex: {
-      type: String,
-      enum: ['male', 'female'],
-      default: 'male',
-    },
-    petLocation: {
-      type: String,
-      required: true,
-    },
-    petPrice: {
-      type: Number,
-      default: 0,
-    },
-    petImage: {
-      type: String,
-      required: false,
-    },
-    petComments: {
-      type: String,
-      default: '',
-    },
-    petCategory: {
-      type: String,
-      enum: ['lost-found', 'in-good-hands', 'sell'],
-      required: true,
-    },
-    petOwner: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
-      // required: true,
-    },
-  },
-  { versionKey: false, timestamps: true }
-);
+    { versionKey: false, timestamps: true }
+)
 
 noticeSchema.post('save', handleMongooseError);
 const Notice = model('notice', noticeSchema);

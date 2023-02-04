@@ -6,7 +6,7 @@ const getNoticesByCategories = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
 
-  const foundNotices = await Notice.find({ petCategory: categoryName }, '', {
+  const foundNotices = await Notice.find({ category: categoryName }, '', {
     skip,
     limit,
   });
