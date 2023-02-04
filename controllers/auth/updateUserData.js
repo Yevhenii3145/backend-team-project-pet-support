@@ -1,54 +1,37 @@
 const { User } = require('../../models/userModel')
-const path = require('path')
-const fs = require('fs/promises')
-const { upload } = require('../../middlewares')
+const { HttpError } = require('../../helpers')
+const { schemas } = require('../../models/userModel')
 
-const avatarDir = path.join(__dirname, '../../', 'public', 'avatars')
+const updateUserData = async (req, res, next) => {
+    const { _id } = req.user
 
-const updateUserData = async (req, res) => {
-    // const { _id } = req.user
-    // const query = req.query
+    const query = req.query
 
-    // const key = Object.keys(query)[0]
+    const { error } = schemas.updateSchema.validate(query)
+    if (error) {
+        next(HttpError(400, error.message))
+    }
 
-    // const { path: tempUpload, originalname } = req.file
+    const key = Object.keys(query)[0]
 
-    // await User.findByIdAndUpdate(_id, { token: '' })
-    // const filename = `${_id}_${originalname}`
-    // const resultUpload = path.join(avatarDir, filename)
-    // await fs.rename(tempUpload, resultUpload)
-    // const avatarURL = path.join('avatars', filename)
-    // await User.findByIdAndUpdate(_id, { avatarURL })
-    res.json({
-        message: 'Well done!',
+    const value = query[key]
+    console.log(typeof value)
+
+    if (value === '') {
+        throw HttpError(400)
+    }
+
+    const actionResult = await User.findByIdAndUpdate(req.user, req.query, {
+        new: true,
     })
+
+    if (!actionResult) {
+        throw HttpError(404)
+    }
+
+    const result = await User.findOne({ _id })
+
+    return res.json({ [key]: result[key] })
 }
 
 module.exports = updateUserData
-
-// upload.single('avatar')
-
-// const updateUserData = async (req, res) => {
-//     const { path: tempUpload, originalname } = req.file
-//     const { _id } = req.user
-//     const filename = `${_id}_${originalname}`
-//     const resultUpload = path.join(avatarDir, filename)
-//     await fs.rename(tempUpload, resultUpload)
-//     const avatarURL = path.join('avatars', filename)
-//     await User.findByIdAndUpdate(_id, { avatarURL })
-
-//     res.json({
-//         avatarURL,
-//     })
-// }
-
-// module.exports = updateUserData
-
-// const obj = {
-//     avatar: 'value',
-// }
-// const key = Object.keys(obj)[0]
-
-// const value = obj[key]
-
-// console.log(value)
