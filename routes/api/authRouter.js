@@ -6,17 +6,28 @@ const router = new express.Router()
 
 const { ctrlWrapper } = require('../../helpers')
 
-const { validateBody, upload } = require('../../middlewares')
+const { validateBody, upload, passport } = require('../../middlewares')
 
 const { schemas } = require('../../models/userModel')
 
+router.get(
+    '/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+)
+
+router.get(
+    '/google/callback',
+    passport.authenticate(
+        'google',
+        { session: false },
+        ctrlWrapper(ctrl.google)
+    )
+)
 router.post(
     '/register',
     validateBody(schemas.registerSchema),
     ctrlWrapper(ctrl.register)
 )
-
-router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verify))
 
 router.post(
     '/login',

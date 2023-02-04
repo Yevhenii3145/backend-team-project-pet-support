@@ -969,9 +969,9 @@
                         "example": "Odessa"
                     },
                     "price": {
-                        "type": "string",
+                        "type": "number",
                         "description": "Pet's price",
-                        "example": "50$"
+                        "example": "50"
                     },
                     "image": {
                         "type": "string",
