@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path') 
 const fs = require('fs/promises')
 const { HttpError, resize } = require('../../helpers')
 const { Notice } = require('../../models/noticeModel')
