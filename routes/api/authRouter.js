@@ -6,9 +6,10 @@ const router = new express.Router()
 
 const { ctrlWrapper } = require('../../helpers')
 
-const { validateBody, upload, passport } = require('../../middlewares')
+const { validateBody, upload } = require('../../middlewares')
 
 const { schemas } = require('../../models/userModel')
+const passport = require('../../services/email/passport')
 
 router.get(
     '/google',
