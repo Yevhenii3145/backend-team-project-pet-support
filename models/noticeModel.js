@@ -60,16 +60,18 @@ noticeSchema.post('save', handleMongooseError);
 const Notice = model('notice', noticeSchema);
 
 const addSchema = Joi.object({
-  title: Joi.string().required(),
-  petName: Joi.string().required(),
-  petDateOfBirth: Joi.string().required(),
-  petSex: Joi.string().allow('male', 'female'),
-  petLocation: Joi.string().required(),
-  petPrice: Joi.number(),
-  petBreed: Joi.string(),
-  petComments: Joi.string(),
-  petCategory: Joi.string().allow('lost-found', 'for-free', 'sell').required(),
-});
+    title: Joi.string().required(),
+    name: Joi.string().required(),
+    birthday: Joi.string().required(),
+    sex: Joi.string().allow('male', 'female'),
+    place: Joi.string().required(),
+    price: Joi.number(),
+    breed: Joi.string(),
+    comments: Joi.string(),
+    category: Joi.string()
+        .allow('lost-found', 'for-free', 'sell')
+        .required(),
+})
 
 const schemas = { addSchema };
 
