@@ -1,7 +1,7 @@
-const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const { Schema, model } = require('mongoose')
+const Joi = require('joi')
 
-const { handleMongooseError } = require('../middlewares');
+const { handleMongooseError } = require('../middlewares')
 
 const noticeSchema = new Schema(
     {
@@ -56,8 +56,8 @@ const noticeSchema = new Schema(
     { versionKey: false, timestamps: true }
 )
 
-noticeSchema.post('save', handleMongooseError);
-const Notice = model('notice', noticeSchema);
+noticeSchema.post('save', handleMongooseError)
+const Notice = model('notice', noticeSchema)
 
 const addSchema = Joi.object({
     title: Joi.string().required(),
@@ -68,11 +68,9 @@ const addSchema = Joi.object({
     price: Joi.number(),
     breed: Joi.string(),
     comments: Joi.string(),
-    category: Joi.string()
-        .allow('lost-found', 'for-free', 'sell')
-        .required(),
+    category: Joi.string().allow('lost-found', 'for-free', 'sell').required(),
 })
 
-const schemas = { addSchema };
+const schemas = { addSchema }
 
-module.exports = { Notice, schemas };
+module.exports = { Notice, schemas }
