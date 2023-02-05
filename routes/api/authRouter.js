@@ -44,6 +44,8 @@ router.post(
     ctrlWrapper(ctrl.resendVerifyEmail)
 )
 
+router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verify))
+
 router.patch('/update', ctrl.authentification, ctrlWrapper(ctrl.updateUserData))
 
 router.patch(
