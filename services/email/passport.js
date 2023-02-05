@@ -24,7 +24,7 @@ const googleCallback = async (
 ) => {
     try {
         const { email, displayName } = profile
-        const user = User.findOne({ email })
+        const user = await User.findOne({ email })
         if (user) {
             done(null, user)
         }

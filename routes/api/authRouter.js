@@ -13,16 +13,13 @@ const passport = require('../../services/email/passport')
 
 router.get(
     '/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
+    passport.authenticate('google', { scope: ['email', 'profile'] })
 )
 
 router.get(
     '/google/callback',
-    passport.authenticate(
-        'google',
-        { session: false },
-        ctrlWrapper(ctrl.google)
-    )
+    passport.authenticate('google', { session: false }),
+    ctrlWrapper(ctrl.google)
 )
 router.post(
     '/register',
