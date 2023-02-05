@@ -11,7 +11,7 @@ const getNoticeByFavorite = async (req, res) => {
         (firstNotice, secondNotice) =>
             new Date(secondNotice.createdAt) - new Date(firstNotice.createdAt)
     )
-    res.json({ notices })
+    res.json(notices)
 }
 
 module.exports = getNoticeByFavorite

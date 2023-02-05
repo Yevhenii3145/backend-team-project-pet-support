@@ -1,31 +1,33 @@
 const express = require('express')
 const ctrl = require('../../controllers/notices')
+const ctrlAuth = require('../../controllers/auth')
 const { upload } = require('../../middlewares')
 
 const router = express.Router()
 
-router.get('/:categoryName', ctrl.getNoticesByCategories)
+router.get('/favorite', ctrlAuth.authentification, ctrl.getNoticeByFavorite)
+
 router.get('/notice/:noticeId', ctrl.getNoticeById)
-router.patch("/favorites/:noticeId",
-  // authenticate,
-    ctrl.updateFavorite);
-router.get("/favorite",
-    // authenticate,
-    ctrl.getNoticeByFavorite);
+
+router.get('/own', ctrlAuth.authentification, ctrl.getUserNotices)
+
+router.get('/search', ctrl.searchByKeyWord)
+
+router.get('/:categoryName', ctrl.getNoticesByCategories)
+
 router.post(
     '/notice',
-    // authenticate,
-    upload.single('petImage'),
+    ctrlAuth.authentification,
+    upload.single('image'),
     ctrl.addNoticeByCategory
-    )
-router.get("/own",
-    // authenticate,
-    ctrl.getUserNotices);
-router.delete(
-    '/:noticeId',
-    // authenticate,
-    ctrl.deleteNoticeById
 )
-router.get('/search', ctrl.searchByKeyWord)
+
+router.patch(
+    '/favorites/:noticeId',
+    ctrlAuth.authentification,
+    ctrl.updateFavorite
+)
+
+router.delete('/:noticeId', ctrlAuth.authentification, ctrl.deleteNoticeById)
 
 module.exports = router

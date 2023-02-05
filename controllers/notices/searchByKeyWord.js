@@ -3,7 +3,7 @@ const { HttpError } = require('../../helpers')
 
 const searchByKeyWord = async (req, res) => {
     const { keyword } = req.query
-    Notice.createIndexes({ title: 'text' })
+    await Notice.createIndexes({ title: 'text' })
     const result = await Notice.find(
         { $text: { $search: keyword } },
         { score: { $meta: 'textScore' } }
