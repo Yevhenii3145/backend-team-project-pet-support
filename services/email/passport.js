@@ -3,7 +3,7 @@ const passport = require('passport')
 const { nanoid } = require('nanoid')
 const bcrypt = require('bcrypt')
 
-const { User } = require('../models/userModel')
+const { User } = require('../../models/userModel')
 
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET_KEY, BASE_URL } = process.env
 

@@ -13,7 +13,7 @@ const google = async (req, res) => {
     await User.findByIdAndUpdate(id, { token })
 
     res.redirect(
-        `http://localhost:3000/team-project-pet-support/usertoken=${token}`
+        `http://localhost:3000/team-project-pet-support?usertoken=${token}`
     )
 }
 
