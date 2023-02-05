@@ -7,7 +7,7 @@ const searchByKeyWord = async (req, res) => {
     if (!result) {
         throw HttpError(404)
     }
-    res.json({ result })
+    res.json(result)
 }
 
 module.exports = searchByKeyWord
