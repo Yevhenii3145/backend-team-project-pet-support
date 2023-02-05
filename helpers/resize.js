@@ -1,8 +1,9 @@
 const Jimp = require('jimp')
+const { AUTO } = require('@jimp/types')
 
 async function resize(path, newPath) {
     const image = await Jimp.read(path)
-    image.cover(250, 250).write(newPath)
+    image.resize(250, AUTO).write(newPath)
 }
 
 module.exports = resize
