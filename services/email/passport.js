@@ -24,19 +24,26 @@ const googleCallback = async (
 ) => {
     try {
         const { email, displayName } = profile
+        console.log(profile)
+
         const user = await User.findOne({ email })
+
         if (user) {
             done(null, user)
         }
         const password = nanoid()
+        const verificationToken = nanoid()
         const hashPassword = await bcrypt.hash(password, 10)
+
         const newUser = await User.create({
             email,
             name: displayName,
             password: hashPassword,
-            city: 'Write your city',
-            phone: '30000000000',
+            city: 'Insert your city',
+            phone: '380930000000',
+            verificationToken,
         })
+
         done(null, newUser)
     } catch (error) {
         done(error, false)
