@@ -669,7 +669,7 @@
                     "phone": {
                         "type": "string",
                         "description": "User's phone number",
-                        "example": "3800000000"
+                        "example": "380000000000"
                     }
                 }
             },
@@ -689,7 +689,7 @@
                     "phone": {
                         "type": "string",
                         "description": "User's phone number",
-                        "example": "3800000000"
+                        "example": "380000000000"
                     },
                     "city": {
                         "type": "string",

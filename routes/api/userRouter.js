@@ -26,6 +26,23 @@ router.post(
     ctrlWrapper(ctrl.addUserPet)
 )
 
+router.post(
+    '/addImage',
+    ctrl.authentification,
+    upload.single('image'),
+    (req, res) => {
+        try {
+            if (!req.file) {
+                throw new Error('Image is not presented!')
+            }
+
+            return res.json({ message: 'Huraaaay' })
+        } catch (e) {
+            return res.status(422).send({ message: e.message })
+        }
+    }
+)
+
 router.delete('/:petId', ctrl.authentification, ctrlWrapper(ctrl.deleteUserPet))
 
 module.exports = router
