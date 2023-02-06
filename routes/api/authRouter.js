@@ -33,8 +33,6 @@ router.post(
     ctrlWrapper(ctrl.login)
 )
 
-router.post('/logout', ctrl.authentification, ctrlWrapper(ctrl.logout))
-
 router.post(
     '/verify',
     validateBody(schemas.loginSchema),
@@ -51,5 +49,7 @@ router.patch(
     upload.single('avatar'),
     ctrlWrapper(ctrl.updateUserAvatar)
 )
+
+router.post('/logout', ctrl.authentification, ctrlWrapper(ctrl.logout))
 
 module.exports = router

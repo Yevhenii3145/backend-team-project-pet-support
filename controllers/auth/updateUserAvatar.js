@@ -15,12 +15,10 @@ const updateAvatar = async (req, res, next) => {
 
     let imageURL
     try {
-        const image = await cloudinary.uploader
-            .upload(resultUpload)
-            .then((result) => {
-                imageURL = result.url
-                fs.unlink(resultUpload)
-            })
+        await cloudinary.uploader.upload(resultUpload).then((result) => {
+            imageURL = result.url
+            fs.unlink(resultUpload)
+        })
     } catch (error) {
         fs.unlink(resultUpload)
         next(HttpError(403, error.message))

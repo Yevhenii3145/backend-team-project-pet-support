@@ -6,10 +6,10 @@ const { Pet } = require('../../models/petModel')
 
 const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
 
-const addUserPet = async (req, res) => {
+const addUserPet = async (req, res, next) => {
     const { _id: owner } = req.user
     if (!req.file) {
-        throw HttpError(400, 'Avatar is required')
+        next(HttpError(400, 'Avatar is required'))
     }
     const { path: tempUpload, originalname } = req.file
     const filename = `${owner}_ownPet_${originalname}`
@@ -20,12 +20,10 @@ const addUserPet = async (req, res) => {
     let imageURL
 
     try {
-        const image = await cloudinary.uploader
-            .upload(resultUpload)
-            .then((result) => {
-                imageURL = result.url
-                fs.unlink(resultUpload)
-            })
+        await cloudinary.uploader.upload(resultUpload).then((result) => {
+            imageURL = result.url
+            fs.unlink(resultUpload)
+        })
     } catch (error) {
         fs.unlink(resultUpload)
         next(HttpError(403, error.message))

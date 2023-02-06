@@ -9,9 +9,6 @@ require('dotenv').config()
 const authRouter = require('./routes/api/authRouter')
 const userRouter = require('./routes/api/userRouter')
 const noticesRouter = require('./routes/api/noticesRouter')
-// const newsRouter = require('./routes/api/newsRouter')
-// const sponsorsRouter = require('./routes/api/sponsorsRouter')
-// const petsRouter = require('./routes/api/petsRouter')
 
 const app = express()
 
@@ -38,23 +35,3 @@ app.use((err, req, res, next) => {
 })
 
 module.exports = app
-
-// const uploadImage = async(event) =>{
-// const file = event.target.files[0];
-// const base64 = await convertBase64(file);
-// setLoading(true);
-// axios.post("http://localhost:4001/uploadImage", {image: base64}).then((res) =>{ setUrl(res.data);
-// alert("Image uploaded"}).catch(....)
-
-// const convertBase64 = (file) => {
-//     return new Promise((resolve, reject) => {
-//         const fileReader = new FileReader()
-//         fileReader.readAsDataURL(file)
-//         fileReader.onload = () => {
-//             resolve(fileReader.result)
-//         }
-//         fileReader.onerror = (error) => {
-//             reject(error)
-//         }
-//     })
-// }

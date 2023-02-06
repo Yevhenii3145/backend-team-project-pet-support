@@ -1,11 +1,11 @@
 const { Notice } = require('../../models/noticeModel')
 const { HttpError } = require('../../helpers')
 
-const getNoticeByFavorite = async (req, res) => {
+const getNoticeByFavorite = async (req, res, next) => {
     const { favoriteNotices } = req.user
     const unsortedNotices = await Notice.find({ _id: favoriteNotices })
     if (!unsortedNotices) {
-        throw HttpError(404)
+        next(HttpError(404))
     }
     const notices = [...unsortedNotices].sort(
         (firstNotice, secondNotice) =>

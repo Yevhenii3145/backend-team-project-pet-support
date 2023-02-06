@@ -6,21 +6,21 @@ require('dotenv').config()
 
 const { BASE_URL } = process.env
 
-const resendVerifyEmail = async (req, res) => {
+const resendVerifyEmail = async (req, res, next) => {
     const { email, password } = req.body
     const user = await User.findOne({ email })
 
     if (!user) {
-        throw HttpError(404, 'User not found')
+        next(HttpError(404, 'User not found'))
     }
 
     if (user.verify) {
-        throw HttpError(400, 'You already verified')
+        next(HttpError(400, 'You already verified'))
     }
 
     const passwordCompare = await bcrypt.compare(password, user.password)
     if (!passwordCompare) {
-        throw HttpError(401, 'Password is wrong')
+        next(HttpError(401, 'Password is wrong'))
     }
 
     const { verificationToken } = user

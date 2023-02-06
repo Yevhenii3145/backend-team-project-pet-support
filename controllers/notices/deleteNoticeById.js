@@ -1,7 +1,7 @@
 const { Notice } = require('../../models/noticeModel')
 const { HttpError } = require('../../helpers')
 
-const deleteNoticeById = async (req, res) => {
+const deleteNoticeById = async (req, res, next) => {
     const { noticeId } = req.params
     const { _id: owner } = req.user
     const deletedNotice = await Notice.findOneAndDelete({
@@ -9,7 +9,7 @@ const deleteNoticeById = async (req, res) => {
         owner,
     })
     if (!deletedNotice) {
-        throw HttpError(404)
+        next(HttpError(404))
     }
     res.json({ message: 'Successful delete' })
 }

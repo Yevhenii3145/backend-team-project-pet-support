@@ -1,7 +1,7 @@
 const { User } = require('../../models/userModel')
 const { HttpError } = require('../../helpers')
 
-const updateFavorite = async (req, res) => {
+const updateFavorite = async (req, res, next) => {
     const { noticeId } = req.params
     const { _id, favoriteNotices = [] } = req.user
 
@@ -17,7 +17,7 @@ const updateFavorite = async (req, res) => {
         { new: true }
     )
     if (!user) {
-        throw HttpError(404)
+        next(HttpError(404))
     }
     res.json({
         user: { email: user.email, favoriteNotices: user.favoriteNotices },
