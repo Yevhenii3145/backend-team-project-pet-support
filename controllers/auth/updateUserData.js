@@ -15,10 +15,9 @@ const updateUserData = async (req, res, next) => {
     const key = Object.keys(query)[0]
 
     const value = query[key]
-    console.log(typeof value)
 
     if (value === '') {
-        throw HttpError(400)
+        next(HttpError(400))
     }
 
     const actionResult = await User.findByIdAndUpdate(req.user, req.query, {
@@ -26,7 +25,7 @@ const updateUserData = async (req, res, next) => {
     })
 
     if (!actionResult) {
-        throw HttpError(404)
+        next(HttpError(404))
     }
 
     const result = await User.findOne({ _id })

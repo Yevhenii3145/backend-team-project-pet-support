@@ -1,7 +1,7 @@
 const { Notice } = require('../../models/noticeModel')
 const { HttpError } = require('../../helpers')
 
-const getNoticeById = async (req, res) => {
+const getNoticeById = async (req, res, next) => {
     const { noticeId } = req.params
 
     const notice = await Notice.findById(noticeId).populate(
@@ -9,7 +9,7 @@ const getNoticeById = async (req, res) => {
         'email phone'
     )
     if (!notice) {
-        throw HttpError(404)
+        next(HttpError(404))
     }
     res.json(notice)
 }
