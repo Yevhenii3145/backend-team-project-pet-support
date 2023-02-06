@@ -26,14 +26,6 @@ router.post(
     ctrlWrapper(ctrl.addUserPet)
 )
 
-// router.post(
-//     '/images',
-//     //     ctrl.authentification,
-//     upload,
-//     ctrl.uploadImage
-// )
-// // )
-
 router.delete('/:petId', ctrl.authentification, ctrlWrapper(ctrl.deleteUserPet))
 
 module.exports = router

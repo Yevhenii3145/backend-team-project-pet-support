@@ -6,19 +6,19 @@ const petSchema = new Schema(
     {
         name: {
             type: String,
-            // required: [true, 'Set name for pet'],
+            required: [true, 'Set name for pet'],
         },
         birthday: {
             type: String,
-            // required: [true, 'Set birthday for pet'],
+            required: [true, 'Set birthday for pet'],
         },
         breed: {
             type: String,
-            // required: [true, 'Set breed of pet'],
+            required: [true, 'Set breed of pet'],
         },
         comments: {
             type: String,
-            // required: [true, 'Set comments about pet'],
+            required: [true, 'Set comments about pet'],
         },
         image: {
             type: String,
