@@ -26,12 +26,13 @@ router.post(
     ctrlWrapper(ctrl.addUserPet)
 )
 
-router.post(
-    '/addImage',
-    ctrl.authentification,
-    upload.single('image'),
-    ctrlWrapper(ctrl.uploadImage)
-)
+// router.post(
+//     '/images',
+//     //     ctrl.authentification,
+//     upload,
+//     ctrl.uploadImage
+// )
+// // )
 
 router.delete('/:petId', ctrl.authentification, ctrlWrapper(ctrl.deleteUserPet))
 
