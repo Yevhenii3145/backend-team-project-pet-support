@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs/promises')
-const { HttpError, resize } = require('../../helpers')
+
+const { HttpError, cloudinary } = require('../../helpers')
 const { Pet } = require('../../models/petModel')
 
 const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
@@ -15,12 +16,19 @@ const addUserPet = async (req, res) => {
     const resultUpload = path.join(avatarsDir, filename)
 
     await fs.rename(tempUpload, resultUpload)
-    await resize(resultUpload, resultUpload)
-    const image = path.join('avatars', filename)
+
+    let imageURL
+
+    const image = await cloudinary.uploader
+        .upload(resultUpload)
+        .then((result) => {
+            imageURL = result.url
+            fs.unlink(resultUpload)
+        })
 
     const newPet = await Pet.create({
         ...req.body,
-        image: image,
+        image: String(imageURL),
         owner,
     })
 

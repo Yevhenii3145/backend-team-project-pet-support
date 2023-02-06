@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs/promises')
-const { HttpError, resize } = require('../../helpers')
+const { HttpError, cloudinary } = require('../../helpers')
 const { Notice } = require('../../models/noticeModel')
 
 const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
@@ -15,11 +15,21 @@ const addNoticeByCategory = async (req, res) => {
     const resultUpload = path.join(avatarsDir, FileName)
 
     await fs.rename(tempUpload, resultUpload)
-    await resize(resultUpload, resultUpload)
-    const avatarURL = path.join('avatars', FileName)
+
+    let imageURL
+
+    const image = await cloudinary.uploader
+        .upload(resultUpload)
+        .then((result) => {
+            imageURL = result.url
+            fs.unlink(resultUpload)
+        })
+
+    // await resize(resultUpload, resultUpload)
+    // const avatarURL = path.join('avatars', FileName)
     const result = await Notice.create({
         ...req.body,
-        image: avatarURL,
+        image: String(imageURL),
         owner,
     })
 
