@@ -19,12 +19,17 @@ const addUserPet = async (req, res) => {
 
     let imageURL
 
-    const image = await cloudinary.uploader
-        .upload(resultUpload)
-        .then((result) => {
-            imageURL = result.url
-            fs.unlink(resultUpload)
-        })
+    try {
+        const image = await cloudinary.uploader
+            .upload(resultUpload)
+            .then((result) => {
+                imageURL = result.url
+                fs.unlink(resultUpload)
+            })
+    } catch (error) {
+        fs.unlink(resultUpload)
+        next(HttpError(403, error.message))
+    }
 
     const newPet = await Pet.create({
         ...req.body,
