@@ -26,7 +26,7 @@ const noticeSchema = new Schema(
             enum: ['male', 'female'],
             default: 'male',
         },
-        place: {
+        location: {
             type: String,
             required: true,
         },
@@ -64,7 +64,7 @@ const addSchema = Joi.object({
     name: Joi.string().required(),
     birthday: Joi.string().required(),
     sex: Joi.string().allow('male', 'female'),
-    place: Joi.string().required(),
+    location: Joi.string().required(),
     price: Joi.number(),
     breed: Joi.string(),
     comments: Joi.string(),

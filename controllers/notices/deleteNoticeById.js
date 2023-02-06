@@ -11,7 +11,7 @@ const deleteNoticeById = async (req, res) => {
     if (!deletedNotice) {
         throw HttpError(404)
     }
-    res.json(deletedNotice)
+    res.json({ message: 'Successful delete' })
 }
 
 module.exports = deleteNoticeById
