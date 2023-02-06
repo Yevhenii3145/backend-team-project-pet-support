@@ -18,15 +18,18 @@ const addNoticeByCategory = async (req, res) => {
 
     let imageURL
 
-    const image = await cloudinary.uploader
-        .upload(resultUpload)
-        .then((result) => {
-            imageURL = result.url
-            fs.unlink(resultUpload)
-        })
+    try {
+        const image = await cloudinary.uploader
+            .upload(resultUpload)
+            .then((result) => {
+                imageURL = result.url
+                fs.unlink(resultUpload)
+            })
+    } catch (error) {
+        fs.unlink(resultUpload)
+        next(HttpError(403, error.message))
+    }
 
-    // await resize(resultUpload, resultUpload)
-    // const avatarURL = path.join('avatars', FileName)
     const result = await Notice.create({
         ...req.body,
         image: String(imageURL),

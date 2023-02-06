@@ -14,12 +14,11 @@ cloudinary.api
         name: 'PetCare',
         tags: 'Dogs, cat, parrots',
         folder: 'pets',
-        allowed_formats: 'jpg, png',
 
         transformation: [
             {
-                width: 200,
-                height: 200,
+                width: 250,
+                height: 250,
                 crop: 'thumb',
                 gravity: 'face',
             },
