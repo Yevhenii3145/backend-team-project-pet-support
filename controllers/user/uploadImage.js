@@ -1,3 +1,6 @@
+const path = require('path')
+const DatauriParser = require('datauri/parser')
+const parser = new DatauriParser()
 const cloudinary = require('cloudinary').v2
 
 const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env
@@ -9,10 +12,26 @@ cloudinary.config({
     secure: true,
 })
 
-const uploadImage = (req, res) => {
-    cloudinary.uploader
-        .upload(req.files.file.path)
-        .then((result) => console.log(result))
+const formatBufferTo64 = (file) =>
+    parser.format(path.extname(file.originalname).toString(), file.buffer)
+
+const cloudinaryUpload = (file) => cloudinary.uploader.upload(file)
+
+const uploadImage = async (req, res) => {
+    try {
+        if (!req.file) {
+            throw new Error('Image is not presented!')
+        }
+        const file64 = formatBufferTo64(req.file)
+        const uploadResult = await cloudinaryUpload(file64.content)
+
+        return res.json({
+            cloudinaryId: uploadResult.public_id,
+            url: uploadResult.secure_url,
+        })
+    } catch (e) {
+        return res.status(422).send({ message: e.message })
+    }
 }
 
 module.exports = uploadImage

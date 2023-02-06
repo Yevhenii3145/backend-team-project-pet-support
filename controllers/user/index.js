@@ -3,6 +3,7 @@ const getCurrent = require('./getCurrent')
 const addUserPet = require('./addUserPet')
 const getUserPets = require('./getUserPets')
 const deleteUserPet = require('./deleteUserPet')
+const uploadImage = require('./uploadImage')
 
 module.exports = {
     authentification,
@@ -10,4 +11,5 @@ module.exports = {
     addUserPet,
     getUserPets,
     deleteUserPet,
+    uploadImage,
 }
