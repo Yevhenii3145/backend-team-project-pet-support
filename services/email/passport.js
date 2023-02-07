@@ -41,6 +41,7 @@ const googleCallback = async (
             city: 'Insert your city',
             phone: '380930000000',
             verificationToken,
+            verify: true,
         })
 
         done(null, newUser)
