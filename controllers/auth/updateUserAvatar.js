@@ -28,18 +28,17 @@ const updateAvatar = async (req, res, next) => {
             publicId = result.public_id
             fs.unlink(resultUpload)
         })
+        await User.findByIdAndUpdate(_id, {
+            avatarURL: imageURL,
+            public_id: publicId,
+        })
+        res.json({
+            avatarURL: imageURL,
+        })
     } catch (error) {
         fs.unlink(resultUpload)
         next(HttpError(403, error.message))
     }
-
-    await User.findByIdAndUpdate(_id, {
-        avatarURL: String(imageURL),
-        public_id: publicId,
-    })
-    res.json({
-        avatarURL: imageURL,
-    })
 }
 
 module.exports = updateAvatar
