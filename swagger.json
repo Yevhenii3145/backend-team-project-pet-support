@@ -1265,11 +1265,6 @@
                 }
             }
         },
-        "encoding": {
-            "image": {
-                "contentType": "image/png, image/jpeg"
-            }
-        },
         "securitySchemes": {
             "Bearer": {
                 "type": "http",
