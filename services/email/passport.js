@@ -37,7 +37,7 @@ const googleCallback = async (
             email,
             name: displayName,
             password: hashPassword,
-            city: 'Wonderland',
+            city: 'Insert city',
             phone: '380930000000',
             verify: true,
         })
