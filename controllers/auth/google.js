@@ -12,7 +12,9 @@ const google = async (req, res) => {
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' })
     await User.findByIdAndUpdate(id, { token })
 
-    res.redirect(`${FRONT_URL}/team-project-pet-support?usertoken=${token}`)
+    res.redirect(
+        `${FRONT_URL}/team-project-pet-support?usertoken=${token}&id=${id}`
+    )
 }
 
 module.exports = google

@@ -12,9 +12,13 @@ const deleteNoticeById = async (req, res, next) => {
     if (!deletedNotice) {
         next(HttpError(404))
     }
-    await cloudinary.uploader
-        .destroy(deletingImage.public_id)
-        .then((result) => result)
+    try {
+        await cloudinary.uploader
+            .destroy(deletingImage.public_id)
+            .then((result) => result)
+    } catch (error) {
+        next(HttpError(404, error.message))
+    }
 
     res.json({ message: 'Successful delete' })
 }

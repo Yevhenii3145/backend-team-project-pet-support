@@ -7,9 +7,13 @@ const deleteUserPet = async (req, res, next) => {
     if (!status) {
         next(HttpError(404))
     }
-    await cloudinary.uploader
-        .destroy(deletingImage.public_id)
-        .then((result) => result)
+    try {
+        await cloudinary.uploader
+            .destroy(deletingImage.public_id)
+            .then((result) => result)
+    } catch (error) {
+        next(HttpError(404, error.message))
+    }
 
     return res.json({ message: 'Successful delete' })
 }

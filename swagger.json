@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.1",
     "info": {
-        "version": "2.0.6.",
+        "version": "2.0.7.",
         "title": "Pet care documentation",
         "description": "How to work with us to help pets faster and better"
     },
@@ -102,6 +102,27 @@
                     "403": {
                         "description": "Forbidden",
                         "content": {}
+                    }
+                }
+            }
+        },
+        "/auth/google": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Registration or login through google",
+                "security": {
+                    "GoogleAuth": ["email", "profile"]
+                },
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Not authenticated"
+                    },
+                    "403": {
+                        "description": "Access token does not have the required scope"
                     }
                 }
             }
@@ -400,6 +421,18 @@
                 "tags": ["Notices"],
                 "summary": "Get the notices by choosed category",
                 "parameters": [{ "in": "path", "name": "categoryName" }],
+                "requestBody": {
+                    "description": "Your category choices",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "string",
+                                "enum": ["lost-found', 'in-good-hands', 'sell"]
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -913,7 +946,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
@@ -1116,7 +1149,7 @@
                     "sex": {
                         "type": "string",
                         "description": "The sex of the the pet",
-                        "example": "girl"
+                        "enum": ["male", "female"]
                     },
                     "comments": {
                         "type": "string",
@@ -1270,6 +1303,15 @@
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT"
+            },
+            "GoogleAuth": {
+                "type": "oauth2",
+                "flow": "authorizationCode",
+                "authorizationUrl": "/auth/google",
+                "scopes": {
+                    "email": "User's email",
+                    "profile": "Google profile"
+                }
             }
         }
     }
