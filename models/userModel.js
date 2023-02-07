@@ -29,6 +29,10 @@ const userSchema = new Schema(
             type: String,
             default: '',
         },
+        public_id: {
+            type: String,
+            default: '',
+        },
         favoriteNotices: {
             type: Array,
             dafault: [],

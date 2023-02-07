@@ -18,10 +18,12 @@ const addUserPet = async (req, res, next) => {
     await fs.rename(tempUpload, resultUpload)
 
     let imageURL
+    let publicId
 
     try {
         await cloudinary.uploader.upload(resultUpload).then((result) => {
             imageURL = result.url
+            publicId = result.public_id
             fs.unlink(resultUpload)
         })
     } catch (error) {
@@ -32,6 +34,7 @@ const addUserPet = async (req, res, next) => {
     const newPet = await Pet.create({
         ...req.body,
         image: String(imageURL),
+        public_id: publicId,
         owner,
     })
 
@@ -42,6 +45,7 @@ const addUserPet = async (req, res, next) => {
         breed: newPet.breed,
         comments: newPet.comments,
         image: newPet.image,
+        public_id: newPet.public_id,
     })
 }
 

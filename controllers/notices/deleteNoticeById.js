@@ -1,9 +1,10 @@
 const { Notice } = require('../../models/noticeModel')
-const { HttpError } = require('../../helpers')
+const { HttpError, cloudinary } = require('../../helpers')
 
 const deleteNoticeById = async (req, res, next) => {
     const { noticeId } = req.params
     const { _id: owner } = req.user
+    const deletingImage = await Notice.findById({ _id: noticeId, owner })
     const deletedNotice = await Notice.findOneAndDelete({
         _id: noticeId,
         owner,
@@ -11,6 +12,10 @@ const deleteNoticeById = async (req, res, next) => {
     if (!deletedNotice) {
         next(HttpError(404))
     }
+    await cloudinary.uploader
+        .destroy(deletingImage.public_id)
+        .then((result) => result)
+
     res.json({ message: 'Successful delete' })
 }
 
