@@ -9,13 +9,11 @@ const updateAvatar = async (req, res, next) => {
     const { path: tempUpload, originalname } = req.file
     const { _id } = req.user
     const userAvatar = await User.findById({ _id })
-    if (userAvatar.public_id !== '') {
-        await cloudinary.uploader
-            .destroy(userAvatar.public_id)
-            .then((result) => result)
-    } else {
-        userAvatar.public_id = ''
-    }
+    userAvatar.public_id !== ''
+        ? await cloudinary.uploader
+              .destroy(userAvatar.public_id)
+              .then((result) => result)
+        : (userAvatar.public_id = '')
 
     const filename = `${_id}_${originalname}`
     const resultUpload = path.join(avatarDir, filename)

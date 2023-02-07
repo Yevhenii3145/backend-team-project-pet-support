@@ -46,7 +46,7 @@ router.patch('/update', ctrl.authentification, ctrlWrapper(ctrl.updateUserData))
 router.patch(
     '/update/avatar',
     ctrl.authentification,
-    upload.single('avatar'),
+    upload.single('avatarURL'),
     ctrlWrapper(ctrl.updateUserAvatar)
 )
 
