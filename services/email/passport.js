@@ -31,16 +31,14 @@ const googleCallback = async (
             done(null, user)
         }
         const password = nanoid()
-        const verificationToken = nanoid()
         const hashPassword = await bcrypt.hash(password, 10)
 
         const newUser = await User.create({
             email,
             name: displayName,
             password: hashPassword,
-            city: 'Insert your city',
+            city: 'Wonderland',
             phone: '380930000000',
-            verificationToken,
             verify: true,
         })
 
