@@ -38,6 +38,10 @@ const noticeSchema = new Schema(
             type: String,
             required: false,
         },
+        public_id: {
+            type: String,
+            default: '',
+        },
         comments: {
             type: String,
             default: '',

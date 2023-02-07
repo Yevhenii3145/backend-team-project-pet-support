@@ -17,10 +17,12 @@ const addNoticeByCategory = async (req, res, next) => {
     await fs.rename(tempUpload, resultUpload)
 
     let imageURL
+    let publicId
 
     try {
         await cloudinary.uploader.upload(resultUpload).then((result) => {
             imageURL = result.url
+            publicId = result.public_id
             fs.unlink(resultUpload)
         })
     } catch (error) {
@@ -31,6 +33,7 @@ const addNoticeByCategory = async (req, res, next) => {
     const result = await Notice.create({
         ...req.body,
         image: String(imageURL),
+        public_id: publicId,
         owner,
     })
 
