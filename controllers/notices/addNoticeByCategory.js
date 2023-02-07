@@ -25,19 +25,18 @@ const addNoticeByCategory = async (req, res, next) => {
             publicId = result.public_id
             fs.unlink(resultUpload)
         })
+        const result = await Notice.create({
+            ...req.body,
+            image: imageURL,
+            public_id: publicId,
+            owner,
+        })
+
+        res.json(result)
     } catch (error) {
         fs.unlink(resultUpload)
         next(HttpError(403, error.message))
     }
-
-    const result = await Notice.create({
-        ...req.body,
-        image: String(imageURL),
-        public_id: publicId,
-        owner,
-    })
-
-    res.json(result)
 }
 
 module.exports = addNoticeByCategory
