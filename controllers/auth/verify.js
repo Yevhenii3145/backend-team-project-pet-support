@@ -2,6 +2,8 @@ const { User } = require('../../models/userModel')
 
 const { HttpError } = require('../../helpers')
 
+const { FRONT_URL } = process.env
+
 const verify = async (req, res, next) => {
     const { verificationToken } = req.params
     const user = await User.findOne({ verificationToken })
@@ -13,9 +15,7 @@ const verify = async (req, res, next) => {
         verificationToken: null,
     })
 
-    res.json({
-        message: 'Verification successful',
-    })
+    res.redirect(`${FRONT_URL}/team-project-pet-support`)
 }
 
 module.exports = verify
