@@ -15,7 +15,7 @@ const verify = async (req, res, next) => {
         verificationToken: null,
     })
 
-    res.redirect(`${FRONT_URL}/team-project-pet-support`)
+    res.redirect(`${FRONT_URL}/team-project-pet-support/login`)
 }
 
 module.exports = verify
