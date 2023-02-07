@@ -116,7 +116,7 @@
                 "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success redirecting"
                     },
                     "401": {
                         "description": "Not authenticated"
