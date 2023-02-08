@@ -11,11 +11,11 @@ const noticeSchema = new Schema(
         },
         name: {
             type: String,
-            // required: [true, "Type the pet's name"],
+            default: '',
         },
         birthday: {
-            type: String,
-            required: [true, "Type the pet's birthday"],
+            type: Date,
+            default: '',
         },
         breed: {
             type: String,
@@ -24,14 +24,14 @@ const noticeSchema = new Schema(
         sex: {
             type: String,
             enum: ['male', 'female'],
-            default: 'male',
+            required: [true, "Type the pet's sex"],
         },
         location: {
             type: String,
-            required: true,
+            required: [true, "Type the pet's location"],
         },
         price: {
-            type: String,
+            type: Number,
             default: '',
         },
         image: {
@@ -48,8 +48,8 @@ const noticeSchema = new Schema(
         },
         category: {
             type: String,
-            enum: ['lost-found', 'in-good-hands', 'sell'],
-            required: true,
+            enum: ['lost-found', 'for-free', 'sell'],
+            required: [true, 'Type the notice category'],
         },
         owner: {
             type: Schema.Types.ObjectId,
@@ -65,8 +65,8 @@ noticeSchema.post('save', handleMongooseError)
 const addSchema = Joi.object({
     title: Joi.string().required(),
     name: Joi.string(),
-    birthday: Joi.string().required(),
-    // sex: Joi.string().allow('male', 'female'),
+    birthday: Joi.string(),
+    sex: Joi.string().allow('male', 'female').required(),
     location: Joi.string().required(),
     price: Joi.string(),
     breed: Joi.string(),

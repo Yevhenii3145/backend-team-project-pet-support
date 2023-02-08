@@ -36,7 +36,9 @@ const updateAvatar = async (req, res, next) => {
             avatarURL: imageURL,
         })
     } catch (error) {
-        fs.unlink(resultUpload)
+        if (resultUpload) {
+            fs.unlink(resultUpload)
+        }
         next(HttpError(403, error.message))
     }
 }

@@ -9,7 +9,7 @@ const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
 const addUserPet = async (req, res, next) => {
     const { _id: owner } = req.user
     if (!req.file) {
-        next(HttpError(400, 'Avatar is required'))
+        next(HttpError(400, 'Image is required'))
     }
     const { path: tempUpload, originalname } = req.file
     const filename = `${owner}_ownPet_${originalname}`
@@ -26,27 +26,29 @@ const addUserPet = async (req, res, next) => {
             publicId = result.public_id
             fs.unlink(resultUpload)
         })
+        const newPet = await Pet.create({
+            ...req.body,
+            image: imageURL,
+            public_id: publicId,
+            owner,
+        })
+
+        res.json({
+            petId: newPet._id,
+            name: newPet.name,
+            birthday: newPet.birthday,
+            breed: newPet.breed,
+            comments: newPet.comments,
+            image: newPet.image,
+            public_id: newPet.public_id,
+        })
     } catch (error) {
-        // fs.unlink(resultUpload)
+        if (resultUpload) {
+            fs.unlink(resultUpload)
+        }
+
         next(HttpError(403, error.message))
     }
-
-    const newPet = await Pet.create({
-        ...req.body,
-        image: imageURL,
-        public_id: publicId,
-        owner,
-    })
-
-    res.json({
-        petId: newPet._id,
-        name: newPet.name,
-        birthday: newPet.birthday,
-        breed: newPet.breed,
-        comments: newPet.comments,
-        image: newPet.image,
-        public_id: newPet.public_id,
-    })
 }
 
 module.exports = addUserPet
