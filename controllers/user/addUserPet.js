@@ -16,7 +16,6 @@ const addUserPet = async (req, res, next) => {
     const resultUpload = path.join(avatarsDir, filename)
 
     await fs.rename(tempUpload, resultUpload)
-    console.log(resultUpload)
 
     let imageURL
     let publicId
