@@ -407,7 +407,7 @@
                         "application/json": {
                             "schema": {
                                 "type": "string",
-                                "enum": ["lost-found', 'in-good-hands', 'sell"]
+                                "enum": ["lost-found', 'for-free', 'sell"]
                             }
                         }
                     }
@@ -965,7 +965,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
@@ -1046,7 +1046,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
@@ -1092,7 +1092,7 @@
             },
             "AddNoticeRequest": {
                 "type": "object",
-                "required": ["category", "title", "sex", "location", "price"],
+                "required": ["category", "title", "sex", "location"],
                 "properties": {
                     "category": {
                         "type": "string",
@@ -1147,7 +1147,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
@@ -1202,7 +1202,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
@@ -1242,7 +1242,7 @@
                     "category": {
                         "type": "string",
                         "description": "Pet's category",
-                        "example": "for sale"
+                        "example": "sell"
                     },
                     "title": {
                         "type": "string",
