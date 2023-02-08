@@ -9,7 +9,7 @@ const petSchema = new Schema(
             required: [true, 'Set name for pet'],
         },
         birthday: {
-            type: Date,
+            type: String,
             required: [true, 'Set birthday for pet'],
         },
         breed: {

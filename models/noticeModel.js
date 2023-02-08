@@ -11,10 +11,10 @@ const noticeSchema = new Schema(
         },
         name: {
             type: String,
-            required: [true, "Type the pet's name"],
+            // required: [true, "Type the pet's name"],
         },
         birthday: {
-            type: Date,
+            type: String,
             required: [true, "Type the pet's birthday"],
         },
         breed: {
@@ -31,8 +31,8 @@ const noticeSchema = new Schema(
             required: true,
         },
         price: {
-            type: Number,
-            default: 0,
+            type: String,
+            default: '',
         },
         image: {
             type: String,
@@ -61,19 +61,20 @@ const noticeSchema = new Schema(
 )
 
 noticeSchema.post('save', handleMongooseError)
-const Notice = model('notice', noticeSchema)
 
 const addSchema = Joi.object({
     title: Joi.string().required(),
-    name: Joi.string().required(),
+    name: Joi.string(),
     birthday: Joi.string().required(),
-    sex: Joi.string().allow('male', 'female'),
+    // sex: Joi.string().allow('male', 'female'),
     location: Joi.string().required(),
-    price: Joi.number(),
+    price: Joi.string(),
     breed: Joi.string(),
     comments: Joi.string(),
     category: Joi.string().allow('lost-found', 'for-free', 'sell').required(),
 })
+
+const Notice = model('notice', noticeSchema)
 
 const schemas = { addSchema }
 
