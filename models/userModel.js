@@ -17,6 +17,10 @@ const userSchema = new Schema(
             type: String,
             required: [true, 'Name is required'],
         },
+        birthday: {
+            type: Date,
+            default: '',
+        },
         city: {
             type: String,
             required: [true, 'Region is required'],
@@ -71,6 +75,7 @@ const loginSchema = Joi.object({
 const updateSchema = Joi.object({
     email: Joi.string().email(),
     name: Joi.string(),
+    birthday: Joi.string(),
     city: Joi.string(),
     phone: Joi.string().min(12).max(12),
 })

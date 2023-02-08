@@ -26,6 +26,7 @@ const addUserPet = async (req, res, next) => {
             publicId = result.public_id
             fs.unlink(resultUpload)
         })
+
         const newPet = await Pet.create({
             ...req.body,
             image: imageURL,
