@@ -9,7 +9,7 @@ const petSchema = new Schema(
             required: [true, 'Set name for pet'],
         },
         birthday: {
-            type: String,
+            type: Date,
             required: [true, 'Set birthday for pet'],
         },
         breed: {
@@ -23,7 +23,7 @@ const petSchema = new Schema(
         image: {
             type: String,
             default: '',
-            required: true,
+            required: [true, "Set pet's image"],
         },
         public_id: {
             type: String,
