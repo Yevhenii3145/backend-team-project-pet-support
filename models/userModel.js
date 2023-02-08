@@ -19,7 +19,6 @@ const userSchema = new Schema(
         },
         birthday: {
             type: Date,
-            required: [true, 'Set birthday for pet'],
         },
         city: {
             type: String,
@@ -63,7 +62,6 @@ const registerSchema = Joi.object({
     password: Joi.string().min(7).max(32).required(),
     email: Joi.string().email().required(),
     name: Joi.string().required(),
-    birthday: Joi.string().required(),
     city: Joi.string().required(),
     phone: Joi.string().min(12).max(12).required(),
 })

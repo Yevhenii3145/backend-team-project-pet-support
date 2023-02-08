@@ -106,27 +106,6 @@
                 }
             }
         },
-        "/auth/google": {
-            "get": {
-                "tags": ["Auth"],
-                "summary": "Registration or login through google",
-                "security": {
-                    "GoogleAuth": ["email", "profile"]
-                },
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "description": "Success redirecting"
-                    },
-                    "401": {
-                        "description": "Not authenticated"
-                    },
-                    "403": {
-                        "description": "Access token does not have the required scope"
-                    }
-                }
-            }
-        },
         "/auth/update": {
             "patch": {
                 "tags": ["Auth"],
