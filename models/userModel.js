@@ -19,6 +19,7 @@ const userSchema = new Schema(
         },
         birthday: {
             type: Date,
+            default: '20.10.2016',
         },
         city: {
             type: String,
