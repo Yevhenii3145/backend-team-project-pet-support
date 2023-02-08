@@ -6,6 +6,7 @@ const getCurrent = async (req, res) => {
 
     res.json({
         name: user.name,
+        birthday: user.birthday,
         email: user.email,
         phone: user.phone,
         city: user.city,

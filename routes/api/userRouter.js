@@ -12,11 +12,7 @@ const { schemasPet } = require('../../models/petModel')
 
 router.get('/current', ctrl.authentification, ctrlWrapper(ctrl.getCurrent))
 
-router.get(
-    '/:userId/pets',
-    ctrl.authentification,
-    ctrlWrapper(ctrl.getUserPets)
-)
+router.get('/pets', ctrl.authentification, ctrlWrapper(ctrl.getUserPets))
 
 router.post(
     '/addPet',

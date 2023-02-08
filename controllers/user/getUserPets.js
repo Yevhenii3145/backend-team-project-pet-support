@@ -3,7 +3,7 @@ const { Pet } = require('../../models/petModel')
 const { HttpError } = require('../../helpers')
 
 const getUserPets = async (req, res, next) => {
-    const { userId: owner } = req.params
+    const { _id: owner } = req.user
     const result = await Pet.find(
         { owner },
         'name birthday breed comments image'

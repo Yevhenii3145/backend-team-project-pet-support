@@ -325,11 +325,11 @@
                 }
             }
         },
-        "/users/{userId}/pets": {
+        "/users/pets": {
             "get": {
                 "tags": ["Users"],
                 "summary": "User's pets",
-                "parameters": [{ "in": "path", "name": "userId" }],
+                "parameters": [],
                 "security": [{ "Bearer": [] }],
                 "responses": {
                     "200": {

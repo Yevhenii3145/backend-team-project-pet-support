@@ -16,6 +16,7 @@ const addUserPet = async (req, res, next) => {
     const resultUpload = path.join(avatarsDir, filename)
 
     await fs.rename(tempUpload, resultUpload)
+    console.log(resultUpload)
 
     let imageURL
     let publicId
@@ -26,6 +27,7 @@ const addUserPet = async (req, res, next) => {
             publicId = result.public_id
             fs.unlink(resultUpload)
         })
+        console.log(imageURL)
         const newPet = await Pet.create({
             ...req.body,
             image: imageURL,
