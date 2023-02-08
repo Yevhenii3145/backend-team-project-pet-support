@@ -16,12 +16,10 @@ cloudinary.api
         folder: 'pets',
 
         transformation: [
-            {
-                width: 250,
-                height: 250,
-                crop: 'thumb',
-                gravity: 'face',
-            },
+            { aspect_ratio: '4:3', crop: 'fill' },
+            { width: 'auto', crop: 'scale' },
+            { dpr: 'auto' },
+            { fetch_format: 'auto' },
         ],
     })
     .then((uploadResult) => uploadResult)
