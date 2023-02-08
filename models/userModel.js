@@ -18,7 +18,7 @@ const userSchema = new Schema(
             required: [true, 'Name is required'],
         },
         birthday: {
-            type: Date,
+            type: String,
             default: '',
         },
         city: {
