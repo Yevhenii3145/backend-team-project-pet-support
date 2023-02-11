@@ -35,7 +35,7 @@ const login = async (req, res, next) => {
     )
 
     if (!result) {
-        throw HttpError(409)
+        next(HttpError(404))
     }
 
     res.status(201).json({
