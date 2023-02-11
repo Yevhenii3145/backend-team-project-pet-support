@@ -17,7 +17,7 @@ const updateUserData = async (req, res, next) => {
     const value = query[key]
 
     if (value === '') {
-        next(HttpError(400))
+        next(HttpError(400, `${key} is required`))
     }
 
     const actionResult = await User.findByIdAndUpdate(req.user, req.query, {
