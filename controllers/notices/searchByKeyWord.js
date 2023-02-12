@@ -3,7 +3,9 @@ const { HttpError } = require('../../helpers')
 
 const searchByKeyWord = async (req, res, next) => {
     const keyword = req.query.keyword
-    const result = await Notice.find({ title: { $regex: keyword } })
+    const result = await Notice.find({
+        title: { $regex: keyword.toLowerCase(), $options: 'i' },
+    })
     if (!result) {
         next(HttpError(404))
     }
