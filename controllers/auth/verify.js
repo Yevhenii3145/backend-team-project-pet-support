@@ -10,9 +10,9 @@ const verify = async (req, res) => {
             verify: true,
             verificationToken: null,
         })
-        res.redirect(`${FRONT_URL}/team-project-pet-support/login`)
+        res.redirect(`${FRONT_URL}/login`)
     } catch (error) {
-        res.redirect(`${FRONT_URL}/team-project-pet-support/*`)
+        res.redirect(`${FRONT_URL}/*`)
     }
 }
 
