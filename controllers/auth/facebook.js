@@ -13,7 +13,7 @@ const facebook = async (req, res) => {
     await User.findByIdAndUpdate(id, { token })
 
     res.redirect(
-        `${FRONT_URL}/team-project-pet-support?usertoken=${token}&id=${id}`
+        `${FRONT_URL}?usertoken=${token}&id=${id}`
     )
 }
 
