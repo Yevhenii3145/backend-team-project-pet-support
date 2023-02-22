@@ -18,6 +18,7 @@ const facebookParams = {
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
     callbackURL: `${BASE_URL}/api/auth/facebook/callback`,
+    scope: ['profile', 'email'],
 }
 
 const facebookCallback = async (
