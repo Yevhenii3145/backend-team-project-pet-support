@@ -21,6 +21,17 @@ router.get(
     passport.authenticate('google', { session: false }),
     ctrlWrapper(ctrl.google)
 )
+router.get(
+    '/facebook',
+    passport.authenticate('facebook', { scope: ['email', 'profile'] })
+)
+
+router.get(
+    '/facebook/callback',
+    passport.authenticate('facebook', { session: false }),
+    ctrlWrapper(ctrl.facebook)
+)
+
 router.post(
     '/register',
     validateBody(schemas.registerSchema),
