@@ -34,13 +34,12 @@ const addUserPet = async (req, res, next) => {
         })
 
         res.json({
-            petId: newPet._id,
+            _id: newPet._id,
             name: newPet.name,
             birthday: newPet.birthday,
             breed: newPet.breed,
             comments: newPet.comments,
             image: newPet.image,
-            public_id: newPet.public_id,
         })
     } catch (error) {
         if (resultUpload) {
