@@ -7,6 +7,7 @@ const resendVerifyEmail = require('./resendVerifyEmail')
 const updateUserData = require('./updateUserData')
 const updateUserAvatar = require('./updateUserAvatar')
 const google = require('./google')
+const facebook = require('./facebook')
 
 module.exports = {
     register,
@@ -18,4 +19,5 @@ module.exports = {
     updateUserData,
     updateUserAvatar,
     google,
+    facebook,
 }
