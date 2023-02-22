@@ -11,6 +11,7 @@ const getCurrent = async (req, res) => {
         phone: user.phone,
         city: user.city,
         avatarURL: user.avatarURL,
+        userId: user._id,
     })
 }
 
