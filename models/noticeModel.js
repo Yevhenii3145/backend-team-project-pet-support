@@ -31,7 +31,7 @@ const noticeSchema = new Schema(
             required: [true, "Type the pet's location"],
         },
         price: {
-            type: Number,
+            type: String,
             default: '',
         },
         image: {
