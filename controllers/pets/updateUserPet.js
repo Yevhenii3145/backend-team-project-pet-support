@@ -6,8 +6,10 @@ const { Pet } = require('../../models/petModel')
 
 const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
 
-const addUserPet = async (req, res, next) => {
+const updateUserPet = async (req, res, next) => {
     const { _id: owner } = req.user
+    const { petId: _id } = req.params
+    const deletingImage = await Pet.findById(_id)
     if (!req.file) {
         next(HttpError(400, 'Image is required'))
     }
@@ -21,6 +23,9 @@ const addUserPet = async (req, res, next) => {
     let publicId
 
     try {
+        await cloudinary.uploader
+            .destroy(deletingImage.public_id)
+            .then((result) => result)
         await cloudinary.uploader.upload(resultUpload).then((result) => {
             imageURL = result.url
             publicId = result.public_id
@@ -28,20 +33,20 @@ const addUserPet = async (req, res, next) => {
                 fs.unlink(resultUpload)
             }
         })
-        const newPet = await Pet.create({
+        await Pet.findByIdAndUpdate(_id, {
             ...req.body,
             image: imageURL,
             public_id: publicId,
-            owner,
         })
 
+        const updatedPet = await Pet.findById(_id)
         res.json({
-            _id: newPet._id,
-            name: newPet.name,
-            birthday: newPet.birthday,
-            breed: newPet.breed,
-            comments: newPet.comments,
-            image: newPet.image,
+            _id: updatedPet._id,
+            name: updatedPet.name,
+            birthday: updatedPet.birthday,
+            breed: updatedPet.breed,
+            comments: updatedPet.comments,
+            image: updatedPet.image,
         })
     } catch (error) {
         if (resultUpload) {
@@ -52,4 +57,4 @@ const addUserPet = async (req, res, next) => {
     }
 }
 
-module.exports = addUserPet
+module.exports = updateUserPet
