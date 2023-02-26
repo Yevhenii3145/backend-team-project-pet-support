@@ -19,6 +19,13 @@ router.post(
     validateBody(schemasPet.addPetSchema),
     ctrlWrapper(ctrl.addUserPet)
 )
+router.put(
+    '/users/:petId',
+    ctrl.authentification,
+    upload.single('image'),
+    validateBody(schemasPet.addPetSchema),
+    ctrlWrapper(ctrl.updateUserPet)
+)
 
 router.delete(
     '/users/:petId',
