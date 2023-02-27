@@ -3,7 +3,9 @@ const { HttpError } = require('../../helpers')
 
 const getNoticeByFavorite = async (req, res, next) => {
     const { favoriteNotices } = req.user
-    const unsortedNotices = await Notice.find({ _id: favoriteNotices })
+    const unsortedNotices = await Notice.find({
+        _id: favoriteNotices,
+    }).populate('owner', 'name email phone')
     if (!unsortedNotices) {
         next(HttpError(404))
     }

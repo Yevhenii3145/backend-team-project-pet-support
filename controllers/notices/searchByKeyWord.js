@@ -5,7 +5,7 @@ const searchByKeyWord = async (req, res, next) => {
     const keyword = req.query.keyword
     const result = await Notice.find({
         title: { $regex: keyword.toLowerCase(), $options: 'i' },
-    })
+    }).populate('owner', 'name email phone')
     if (!result) {
         next(HttpError(404))
     }

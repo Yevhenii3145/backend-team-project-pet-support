@@ -3,7 +3,10 @@ const { Notice } = require('../../models/noticeModel')
 
 const getUserNotices = async (req, res, next) => {
     const { _id: owner } = req.user
-    const unsortedNotices = await Notice.find({ owner })
+    const unsortedNotices = await Notice.find({ owner }).populate(
+        'owner',
+        'name email phone'
+    )
     if (!unsortedNotices) {
         next(HttpError(404))
     }
