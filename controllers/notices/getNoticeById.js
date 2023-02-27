@@ -6,7 +6,7 @@ const getNoticeById = async (req, res, next) => {
 
     const notice = await Notice.findById(noticeId).populate(
         'owner',
-        'email phone'
+        'name email phone'
     )
     if (!notice) {
         next(HttpError(404))
