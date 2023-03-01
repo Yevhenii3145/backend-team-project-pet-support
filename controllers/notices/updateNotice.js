@@ -1,21 +1,20 @@
 const path = require('path')
 const fs = require('fs/promises')
-
 const { HttpError, cloudinary } = require('../../helpers')
-const { Pet } = require('../../models/petModel')
+const { Notice } = require('../../models/noticeModel')
 
 const avatarsDir = path.join(__dirname, '../../', 'public', 'avatars')
 
-const updateUserPet = async (req, res, next) => {
+const updateNotice = async (req, res, next) => {
     const { _id: owner } = req.user
-    const { petId: _id } = req.params
-    const { public_id } = await Pet.findById(_id)
+    const { noticeId: _id } = req.params
+    const { public_id } = await Notice.findById(_id)
     if (!req.file) {
-        next(HttpError(400, 'Image is required'))
+        next(HttpError(400, 'Avatar is required'))
     }
     const { path: tempUpload, originalname } = req.file
-    const filename = `${owner}_ownPet_${originalname}`
-    const resultUpload = path.join(avatarsDir, filename)
+    const FileName = `${owner}_pet_${originalname}`
+    const resultUpload = path.join(avatarsDir, FileName)
 
     await fs.rename(tempUpload, resultUpload)
 
@@ -27,25 +26,20 @@ const updateUserPet = async (req, res, next) => {
         await cloudinary.uploader.upload(resultUpload).then((result) => {
             imageURL = result.url
             publicId = result.public_id
-            if (resultUpload) {
-                fs.unlink(resultUpload)
-            }
+            fs.unlink(resultUpload)
         })
-        await Pet.findByIdAndUpdate(_id, {
+        await Notice.findByIdAndUpdate(_id, {
             ...req.body,
             image: imageURL,
             public_id: publicId,
         })
 
-        const updatedPet = await Pet.findById(_id)
-        res.json({
-            _id: updatedPet._id,
-            name: updatedPet.name,
-            birthday: updatedPet.birthday,
-            breed: updatedPet.breed,
-            comments: updatedPet.comments,
-            image: updatedPet.image,
-        })
+        const updatedNotice = await Notice.findById(_id).populate(
+            'owner',
+            'name email phone'
+        )
+
+        res.json(updatedNotice)
     } catch (error) {
         if (resultUpload) {
             fs.unlink(resultUpload)
@@ -55,4 +49,4 @@ const updateUserPet = async (req, res, next) => {
     }
 }
 
-module.exports = updateUserPet
+module.exports = updateNotice

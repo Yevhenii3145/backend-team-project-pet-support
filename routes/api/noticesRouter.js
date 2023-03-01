@@ -1,31 +1,46 @@
 const express = require('express')
 const ctrl = require('../../controllers/notices')
 const ctrlAuth = require('../../controllers/auth')
-const { upload } = require('../../middlewares')
+const { upload, validateBody } = require('../../middlewares')
+const { ctrlWrapper } = require('../../helpers')
+const { schemas } = require('../../models/noticeModel')
 
 const router = express.Router()
 
-router.get('/favorite', ctrlAuth.authentification, ctrl.getNoticeByFavorite)
+router.get(
+    '/favorite',
+    ctrlAuth.authentification,
+    ctrlWrapper(ctrl.getNoticeByFavorite)
+)
 
-router.get('/notice/:noticeId', ctrl.getNoticeById)
+router.get('/notice/:noticeId', ctrlWrapper(ctrl.getNoticeById))
 
-router.get('/own', ctrlAuth.authentification, ctrl.getUserNotices)
+router.get('/own', ctrlAuth.authentification, ctrlWrapper(ctrl.getUserNotices))
 
-router.get('/search', ctrl.searchByKeyWord)
+router.get('/search', ctrlWrapper(ctrl.searchByKeyWord))
 
-router.get('/:categoryName', ctrl.getNoticesByCategories)
+router.get('/:categoryName', ctrlWrapper(ctrl.getNoticesByCategories))
 
 router.post(
     '/notice',
     ctrlAuth.authentification,
     upload.single('image'),
-    ctrl.addNoticeByCategory
+    validateBody(schemas.addSchema),
+    ctrlWrapper(ctrl.addNoticeByCategory)
+)
+
+router.put(
+    '/notice/:noticeId',
+    ctrlAuth.authentification,
+    upload.single('image'),
+    validateBody(schemas.addSchema),
+    ctrlWrapper(ctrl.updateNotice)
 )
 
 router.patch(
     '/favorites/:noticeId',
     ctrlAuth.authentification,
-    ctrl.updateFavorite
+    ctrlWrapper(ctrl.updateFavorite)
 )
 
 router.delete('/:noticeId', ctrlAuth.authentification, ctrl.deleteNoticeById)
