@@ -23,7 +23,9 @@ const addNoticeByCategory = async (req, res, next) => {
         await cloudinary.uploader.upload(resultUpload).then((result) => {
             imageURL = result.url
             publicId = result.public_id
-            fs.unlink(resultUpload)
+            if (resultUpload) {
+                fs.unlink(resultUpload)
+            }
         })
         const result = await Notice.create({
             ...req.body,
@@ -31,8 +33,12 @@ const addNoticeByCategory = async (req, res, next) => {
             public_id: publicId,
             owner,
         })
+        const addedNotice = await Notice.findById(result._id).populate(
+            'owner',
+            'name email phone'
+        )
 
-        res.json(result)
+        res.json(addedNotice)
     } catch (error) {
         if (resultUpload) {
             fs.unlink(resultUpload)

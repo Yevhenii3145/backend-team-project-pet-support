@@ -6,7 +6,7 @@ const deleteNoticeById = require('./deleteNoticeById')
 const updateFavorite = require('./updateFavorite')
 const getNoticeByFavorite = require('./getNoticeByFavorite')
 const getUserNotices = require('./getUserNotices')
-
+const updateNotice = require('./updateNotice')
 
 module.exports = {
     addNoticeByCategory,
@@ -17,4 +17,5 @@ module.exports = {
     updateFavorite,
     getNoticeByFavorite,
     getUserNotices,
+    updateNotice,
 }
