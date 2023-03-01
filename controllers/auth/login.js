@@ -10,7 +10,7 @@ const login = async (req, res, next) => {
 
     const user = await User.findOne({ email })
     if (!user) {
-        next(HttpError(401, 'Email is wrong'))
+        next(HttpError(401, 'Email is wrong or user doesn`t exist'))
     }
 
     if (!user.verify) {
