@@ -79,10 +79,20 @@ const updateSchema = Joi.object({
     phone: Joi.string().min(12).max(12),
 })
 
+const emailSchema = Joi.object({
+    email: Joi.string().email().required(),
+})
+
+const updatePasswordSchema = Joi.object({
+    password: Joi.string().min(7).max(32).required(),
+})
+
 const schemas = {
     registerSchema,
     loginSchema,
     updateSchema,
+    emailSchema,
+    updatePasswordSchema,
 }
 
 const User = model('user', userSchema)

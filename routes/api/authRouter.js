@@ -50,9 +50,24 @@ router.post(
     ctrlWrapper(ctrl.resendVerifyEmail)
 )
 
+router.post(
+    '/resetPassword',
+    validateBody(schemas.emailSchema),
+    ctrlWrapper(ctrl.resetPassword)
+)
+
 router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verify))
 
+router.get('/resetPassword/:token', ctrlWrapper(ctrl.resetPasswordRedirect))
+
 router.patch('/update', ctrl.authentification, ctrlWrapper(ctrl.updateUserData))
+
+router.patch(
+    '/updatePassword',
+    ctrl.authentification,
+    validateBody(schemas.updatePasswordSchema),
+    ctrlWrapper(ctrl.updatePassword)
+)
 
 router.patch(
     '/update/avatar',
