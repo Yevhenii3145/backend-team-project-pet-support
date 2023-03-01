@@ -8,6 +8,9 @@ const updateUserData = require('./updateUserData')
 const updateUserAvatar = require('./updateUserAvatar')
 const google = require('./google')
 const facebook = require('./facebook')
+const resetPassword = require('./resetPassword')
+const resetPasswordRedirect = require('./resetPasswordRedirect')
+const updatePassword = require('./updatePassword')
 
 module.exports = {
     register,
@@ -20,4 +23,7 @@ module.exports = {
     updateUserAvatar,
     google,
     facebook,
+    resetPassword,
+    resetPasswordRedirect,
+    updatePassword,
 }
