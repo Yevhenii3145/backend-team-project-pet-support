@@ -43,6 +43,16 @@ router.patch(
     ctrlWrapper(ctrl.updateFavorite)
 )
 
-router.delete('/:noticeId', ctrlAuth.authentification, ctrl.deleteNoticeById)
+router.delete(
+    '/favorites/:noticeId',
+    ctrlAuth.authentification,
+    ctrlWrapper(ctrl.deleteFromFavorite)
+)
+
+router.delete(
+    '/:noticeId',
+    ctrlAuth.authentification,
+    ctrlWrapper(ctrl.deleteNoticeById)
+)
 
 module.exports = router
