@@ -1,19 +1,20 @@
 const { User } = require('../../models/userModel')
 const { HttpError } = require('../../helpers')
 
-const updateFavorite = async (req, res, next) => {
+const deleteFromFavorite = async (req, res, next) => {
     const { noticeId } = req.params
     const { _id, favoriteNotices = [] } = req.user
 
     const index = favoriteNotices.indexOf(noticeId)
     if (index === -1) {
-        favoriteNotices.push(noticeId)
+        next(HttpError(404, 'Notice not found'))
+    } else {
+        favoriteNotices.splice(index, 1)
         const user = await User.findByIdAndUpdate(
             _id,
             { favoriteNotices },
             { new: true }
         )
-
         if (user) {
             res.json({
                 user: {
@@ -22,11 +23,9 @@ const updateFavorite = async (req, res, next) => {
                 },
             })
         } else {
-            next(HttpError(404, 'User not found'))
+            next(HttpError(404, 'User not found in favorites'))
         }
-    } else {
-        next(HttpError(400, 'Notice already in favorites'))
     }
 }
 
-module.exports = updateFavorite
+module.exports = deleteFromFavorite
