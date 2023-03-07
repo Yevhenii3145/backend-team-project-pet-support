@@ -296,7 +296,7 @@ const resetPassword = async (req, res, next) => {
                                 "
                               >
                                 <a
-                                  href="${BASE_URL}/api/auth/resetPassword/${token}"
+                                  href="${BASE_URL}/api/auth/reset-password/${token}"
                                   target="_blank"
                                   style="
                                     background-color: #f59256;
