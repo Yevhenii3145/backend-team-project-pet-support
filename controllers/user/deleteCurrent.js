@@ -3,7 +3,7 @@ const { Notice } = require('../../models/noticeModel')
 const { Pet } = require('../../models/petModel')
 const { HttpError, cloudinary } = require('../../helpers')
 
-const deleteCurrent = async (req, res) => {
+const deleteCurrent = async (req, res, next) => {
     try {
         const { _id } = req.user
         const user = await User.findOne({ _id })
@@ -23,18 +23,19 @@ const deleteCurrent = async (req, res) => {
                 .then((result) => result)
             await Pet.findByIdAndDelete(item._id)
         })
+        if (user.public_id) {
+            await cloudinary.uploader
+                .destroy(user.public_id)
+                .then((result) => result)
+        }
 
-        await cloudinary.uploader
-            .destroy(user.public_id)
-            .then((result) => result)
         await User.findByIdAndDelete(_id)
+        res.json({
+            message: 'Successful delete',
+        })
     } catch (error) {
         next(HttpError(404, error.message))
     }
-
-    res.json({
-        message: 'Successful delete',
-    })
 }
 
 module.exports = deleteCurrent
