@@ -51,19 +51,19 @@ router.post(
 )
 
 router.post(
-    '/resetPassword',
+    '/reset-password',
     validateBody(schemas.emailSchema),
     ctrlWrapper(ctrl.resetPassword)
 )
 
 router.get('/verify/:verificationToken', ctrlWrapper(ctrl.verify))
 
-router.get('/resetPassword/:token', ctrlWrapper(ctrl.resetPasswordRedirect))
+router.get('/reset-password/:token', ctrlWrapper(ctrl.resetPasswordRedirect))
 
 router.patch('/update', ctrl.authentification, ctrlWrapper(ctrl.updateUserData))
 
 router.patch(
-    '/updatePassword',
+    '/update-password',
     ctrl.authentification,
     validateBody(schemas.updatePasswordSchema),
     ctrlWrapper(ctrl.updatePassword)
