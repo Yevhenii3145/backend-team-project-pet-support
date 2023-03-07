@@ -10,7 +10,11 @@ const { validateBody, upload } = require('../../middlewares')
 
 const { schemasPet } = require('../../models/petModel')
 
-router.get('/users/pets', ctrl.authentification, ctrlWrapper(ctrl.getUserPets))
+router.get(
+    '/users/current/pets',
+    ctrl.authentification,
+    ctrlWrapper(ctrl.getUserPets)
+)
 
 router.get('/users/:userId/pets', ctrlWrapper(ctrl.getAnotherUserPets))
 
