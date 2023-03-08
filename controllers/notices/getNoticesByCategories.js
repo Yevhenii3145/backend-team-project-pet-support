@@ -10,9 +10,10 @@ const getNoticesByCategories = async (req, res, next) => {
             skip,
             limit,
         }).populate('owner', 'name email phone')
-        const countNotices = await (
-            await Notice.find({ category: categoryName }, '')
-        ).length
+        const countNotices =
+            (await (
+                await Notice.find({ category: categoryName }, '')
+            ).length) ?? 0
         if (!foundNotices) {
             next(HttpError(404))
         } else {

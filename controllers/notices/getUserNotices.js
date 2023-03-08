@@ -8,7 +8,7 @@ const getUserNotices = async (req, res, next) => {
             'owner',
             'name email phone'
         )
-        const countNotices = await Notice.find({ owner }).length
+        const countNotices = (await Notice.find({ owner }).length) ?? 0
         if (!unsortedNotices) {
             next(HttpError(404))
         } else {

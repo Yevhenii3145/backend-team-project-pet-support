@@ -3,13 +3,22 @@ const { HttpError } = require('../../helpers')
 
 const searchByKeyWord = async (req, res, next) => {
     const keyword = req.query.keyword
-    const result = await Notice.find({
-        title: { $regex: keyword.toLowerCase(), $options: 'i' },
-    }).populate('owner', 'name email phone')
-    if (!result) {
-        next(HttpError(404))
+    try {
+        const result = await Notice.find({
+            title: { $regex: keyword.toLowerCase(), $options: 'i' },
+        }).populate('owner', 'name email phone')
+        const countNotices =
+            (await Notice.find({
+                title: { $regex: keyword.toLowerCase(), $options: 'i' },
+            }).length) ?? 0
+        if (!result) {
+            next(HttpError(404))
+        } else {
+            res.json({ countNotices, result })
+        }
+    } catch (error) {
+        next(HttpError(404, error.message))
     }
-    res.json(result)
 }
 
 module.exports = searchByKeyWord
