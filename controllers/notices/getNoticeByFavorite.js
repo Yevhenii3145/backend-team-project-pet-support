@@ -3,12 +3,23 @@ const { HttpError } = require('../../helpers')
 
 const getNoticeByFavorite = async (req, res, next) => {
     const { favoriteNotices } = req.user
+    const { page = 1, limit = 10 } = req.query
+    const skip = (page - 1) * limit
     try {
-        const unsortedNotices = await Notice.find({
+        const unsortedNotices = await Notice.find(
+            {
+                _id: favoriteNotices,
+            },
+            '',
+            {
+                skip,
+                limit,
+            }
+        ).populate('owner', 'name email phone')
+        const allNotices = await Notice.find({
             _id: favoriteNotices,
-        }).populate('owner', 'name email phone')
-
-        const countNotices = unsortedNotices.length ?? 0
+        })
+        const countNotices = allNotices.length ?? 0
         if (!unsortedNotices) {
             next(HttpError(404))
         } else {
