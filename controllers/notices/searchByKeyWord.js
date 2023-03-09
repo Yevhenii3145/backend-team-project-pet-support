@@ -7,10 +7,7 @@ const searchByKeyWord = async (req, res, next) => {
         const result = await Notice.find({
             title: { $regex: keyword.toLowerCase(), $options: 'i' },
         }).populate('owner', 'name email phone')
-        const countNotices =
-            (await Notice.find({
-                title: { $regex: keyword.toLowerCase(), $options: 'i' },
-            }).length) ?? 0
+        const countNotices = result.length ?? 0
         if (!result) {
             next(HttpError(404))
         } else {

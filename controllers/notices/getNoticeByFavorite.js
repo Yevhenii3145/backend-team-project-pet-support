@@ -7,10 +7,8 @@ const getNoticeByFavorite = async (req, res, next) => {
         const unsortedNotices = await Notice.find({
             _id: favoriteNotices,
         }).populate('owner', 'name email phone')
-        const countNotices =
-            (await Notice.find({
-                _id: favoriteNotices,
-            }).length) ?? 0
+
+        const countNotices = unsortedNotices.length ?? 0
         if (!unsortedNotices) {
             next(HttpError(404))
         } else {
