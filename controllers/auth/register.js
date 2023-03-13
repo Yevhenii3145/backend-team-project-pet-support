@@ -384,7 +384,7 @@ const register = async (req, res, next) => {
         name: newUser.name,
         email: newUser.email,
         phone: newUser.phone,
-        city: newUser.сity,
+        city: newUser.city,
         userId: newUser._id,
     })
 }
