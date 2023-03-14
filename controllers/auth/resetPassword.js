@@ -19,6 +19,15 @@ const resetPassword = async (req, res, next) => {
     }
 
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' })
+    const result = await User.findByIdAndUpdate(
+        user._id,
+        { token },
+        { new: true }
+    )
+
+    if (!result) {
+        next(HttpError(404))
+    }
 
     const resetPasswordEmail = {
         to: email,
