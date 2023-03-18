@@ -1,4 +1,4 @@
-const { Strategy } = require('passport-google-oauth2')
+const GoogleStrategy = require('passport-google-oauth2').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const passport = require('passport')
 const { nanoid } = require('nanoid')
@@ -35,20 +35,22 @@ const facebookCallback = async (
 
         if (user) {
             done(null, user)
+        } else {
+            const password = nanoid()
+            const hashPassword = await bcrypt.hash(password, 10)
+
+            const newUser = await User.create({
+                email,
+                password: hashPassword,
+                name: displayName,
+                city: 'City, Region',
+                phone: '380930000000',
+                verify: true,
+                verificationToken: null,
+            })
+
+            done(null, newUser)
         }
-        const password = nanoid()
-        const hashPassword = await bcrypt.hash(password, 10)
-
-        const newUser = await User.create({
-            email,
-            name: displayName,
-            password: hashPassword,
-            city: 'Insert city',
-            phone: '380930000000',
-            verify: true,
-        })
-
-        done(null, newUser)
     } catch (error) {
         done(error, false)
     }
@@ -76,29 +78,27 @@ const googleCallback = async (
 
         if (user) {
             done(null, user)
+        } else {
+            const password = nanoid()
+            const hashPassword = await bcrypt.hash(password, 10)
+
+            const newUser = await User.create({
+                email,
+                password: hashPassword,
+                name: displayName,
+                city: 'City, Region',
+                phone: '380930000000',
+                verify: true,
+                verificationToken: null,
+            })
+            done(null, newUser)
         }
-        const password = nanoid()
-        const hashPassword = await bcrypt.hash(password, 10)
-
-        const newUser = await User.create({
-            email,
-            name: displayName,
-            password: hashPassword,
-            city: 'City, Region',
-            phone: '380930000000',
-            verify: true,
-        })
-
-        done(null, newUser)
     } catch (error) {
         done(error, false)
     }
 }
 
-const googleStrategy = new Strategy(googleParams, googleCallback)
-const facebookStrategy = new FacebookStrategy(facebookParams, facebookCallback)
-
-passport.use('google', googleStrategy)
-passport.use('facebook', facebookStrategy)
+passport.use(new GoogleStrategy(googleParams, googleCallback))
+passport.use(new FacebookStrategy(facebookParams, facebookCallback))
 
 module.exports = passport
